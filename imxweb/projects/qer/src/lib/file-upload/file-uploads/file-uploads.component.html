@@ -1,0 +1,20 @@
+<h2>File Upload</h2>
+<br>
+<label for="datoteke" class="label1">Choose a file name </label>
+<div class="custom-select">
+  <select name="datoteke" id="datoteke" (change)="selectFileName($event.target.value)" color="primary">
+    <option value="mk1.txt">mk1.txt</option>
+    <option value="mk2.txt">mk2.txt</option>
+    <option value="mk3.txt">mk3.txt</option>
+    <option value="mk4.txt">mk4.txt</option>
+    <option value="mk5.txt">mk5.txt</option>
+  </select>
+</div>
+<div>
+</div>
+<br>
+<label for="file-upload" class="custom-file-upload">
+  Choose a file
+</label>
+<input type="file" name="" id="file-upload" (change)="onFileSelected($event)">
+<button type="button" (click)="onUpload()" class="mat-focus-indicator imx-right-button mat-raised-button mat-button-base mat-primary ng-star-inserted" color="primary">Upload</button>

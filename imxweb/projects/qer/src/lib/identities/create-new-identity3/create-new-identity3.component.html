@@ -1,0 +1,25 @@
+<div eui-sidesheet-content>
+    <mat-card>
+      <form class="imx-form" [formGroup]="identityForm">
+        <mat-accordion>
+          <mat-expansion-panel *ngIf="cdrListCustom.length > 0" data-imx-identifier="create-new-identity-expansion-location" [expanded]="true" >
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ '#LDS#Custom information' | translate }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <imx-cdr-editor *ngFor="let cdr of cdrListCustom" [cdr]="cdr" (readOnlyChanged)=update(cdr,cdrListCustom) (controlCreated)="identityForm.addControl(cdr.column.ColumnName, $event)">
+            </imx-cdr-editor>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </form>
+    </mat-card>
+  </div>
+  <div eui-sidesheet-actions >
+    <button data-imx-identifier="create-new-identity-button-save" (click)="submit()"
+      [disabled]="accountIsOff || identityForm.invalid || !identityForm.dirty" mat-raised-button type="button"
+      color="primary">
+      {{ '#LDS#Create' | translate }}
+    </button>
+  </div>
+  
