@@ -230,11 +230,10 @@ export class CreateNewIdentity2Component implements OnDestroy {
       'Remarks'
     ];
 
-    const readOnlyColumns = [];
+    const readOnlyColumns = ['UID_PersonHead'];
 
     const defaultValues = {
       'EmployeeType': 'Consultant', // Set your default value here,
-      'UID_PersonHead': '317cd1c8-9df8-4166-9c2a-e4244bd6c7ca'
     };
 
     this.cdrListCustom = this.cdrFactoryService.buildCdrFromColumnList2(this.data.selectedIdentity.GetEntity(), customColumns, readOnlyColumns, defaultValues);

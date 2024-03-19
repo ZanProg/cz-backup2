@@ -1,30 +1,25 @@
-<div *ngIf="!isEnteringPasscode && !isEnteringUsernameAndPassword" class="imx-loginInput">
+<div *ngIf="!isEnteringPasscode" class="imx-loginInput">
     <input placeholder="{{'#LDS#User name' | translate}}" type="text" [(ngModel)]="userName"
-        [attr.data-imx-identifier]="'pwd-username'" [required]="true" >
+        [attr.data-imx-identifier]="'pwd-username'" [required]="true">
 
     <div class="alert-container">
-        <eui-alert type="info" [condensed]="true"><span>{{ "#LDS#Please enter the last 4 digits of your phone number"| translate }}</span>
+        <eui-alert type="info" [condensed]="true"><span>{{ LdsCaptchaInfo | translate }}</span>
         </eui-alert>
     </div>
 
     <div class="captcha-container">
-        <!-- <imx-captcha></imx-captcha> -->
+        <imx-captcha></imx-captcha>
 
-        <!-- <input placeholder="{{'#LDS#Enter captcha' | translate}}" type="text"
-            [(ngModel)]="captchaSvc.Response" [attr.data-imx-identifier]="'captcha-code'" [required]="true"> -->
-        <input placeholder="{{'#LDS#Enter the last 4 digits of your phone number' | translate}}" type="text"
-            [(ngModel)]="lastFourDigits" [attr.data-imx-identifier]="'phone-number'" [required]="true">
+        <input placeholder="{{'#LDS#Enter characters from the image' | translate}}" type="text"
+            [(ngModel)]="captchaSvc.Response" [attr.data-imx-identifier]="'captcha-code'" [required]="true">
     </div>
 
     <div class="buttonbar">
-        <button mat-raised-button (click)="CheckNumber()" [disabled]="!isButtonDisabled">{{
-            '#LDS#Check' | translate}}</button>
-        <!-- <button mat-raised-button color="primary" class="imx-next-button" [disabled]="!userName || !captchaSvc.Response" -->
-        <button mat-raised-button color="primary" class="imx-next-button" (click)="MoveToEnterPasscode()" [disabled]="isButtonDisabled">
+        <button mat-raised-button (click)="captchaSvc.ReinitCaptcha()">{{
+            '#LDS#Refresh image' | translate}}</button>
+        <button mat-raised-button color="primary" class="imx-next-button" [disabled]="!userName || !captchaSvc.Response"
+            (click)="MoveToEnterPasscode()">
             {{'#LDS#Next' | translate}}
-        </button>
-        <button mat-raised-button color="primary" class="imx-next-button" (click)="MoveToEnterUsernameAndPassword()">
-            {{'#LDS#Continue without generating' | translate}}
         </button>
     </div>
 </div>
@@ -41,18 +36,4 @@
             (click)="Login()">{{'#LDS#Submit' | translate}}</button>
     </div>
 
-</div>
-
-<div class="imx-loginInput" *ngIf="isEnteringUsernameAndPassword">
-    <input placeholder="{{'#LDS#User name' | translate}}" type="text" [(ngModel)]="userName"
-        [attr.data-imx-identifier]="'pwd-username'" [required]="true" >
-    <div class="passcode">
-        <input placeholder="{{'#LDS#Passcode' | translate}}" type="password" [(ngModel)]="passcode"
-            [attr.data-imx-identifier]="'passcode'" [required]="true">
-    </div>
-
-    <div class="buttonbar">
-        <button mat-raised-button type="button" [disabled]="!passcode"
-            (click)="Login()">{{'#LDS#Submit' | translate}}</button>
-    </div>
 </div>

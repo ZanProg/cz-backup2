@@ -55,6 +55,7 @@ import { ProjectConfigurationService } from '../project-configuration/project-co
 import { ViewConfigService } from '../view-config/view-config.service';
 import { CreateNewIdentityComponent } from './create-new-identity/create-new-identity.component';
 import { CreateNewIdentity2Component } from './create-new-identity2/create-new-identity2.component';
+import { CreateNewIdentity3Component } from './create-new-identity3/create-new-identity3.component';
 import { IdentitiesReportsService } from './identities-reports.service';
 import { IdentitiesService } from './identities.service';
 import { IdentitySidesheetComponent } from './identity-sidesheet/identity-sidesheet.component';
@@ -304,6 +305,26 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
   public async createNewIdentity2(): Promise<void> {
     await this.sideSheet
       .open(CreateNewIdentity2Component, {
+        title: await this.translate.get('#LDS#Create Identity 2').toPromise(),
+        padding: '0px',
+        width: 'max(650px, 65%)',
+        disableClose: true,
+        testId: 'create-new-identity-sidesheet',
+        icon: 'contactinfo',
+        data: {
+          selectedIdentity: await this.identitiesService.createEmptyEntity(),
+          projectConfig: this.projectConfig,
+        },
+      })
+      .afterClosed()
+      .toPromise();
+
+    return this.navigate();
+  }
+
+  public async createNewIdentity3(): Promise<void> {
+    await this.sideSheet
+      .open(CreateNewIdentity3Component, {
         title: await this.translate.get('#LDS#Create Identity 2').toPromise(),
         padding: '0px',
         width: 'max(650px, 65%)',

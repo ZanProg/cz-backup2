@@ -31,6 +31,7 @@
 export const environment = {
   production: false,
   clientUrl: '',
+  // clientUrl: 'http://localhost:8182',
   appName: 'qer-app-pwdportal',
   appVersion: '1.0.0'
 };

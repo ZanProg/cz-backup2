@@ -58,7 +58,11 @@
   </button>
   <button *ngIf="isPersonAdmin || isManagerForPersons" mat-raised-button color="primary" data-imx-identifier="identities-button-create-new-identity" (click)="createNewIdentity2()" class="imx-right-button">
     <eui-icon icon="add"></eui-icon>
-    <span translate>#LDS#Create Identity 2</span>
+    <span translate>#LDS#Create External</span>
+  </button>
+  <button *ngIf="isPersonAdmin || isManagerForPersons" mat-raised-button color="primary" data-imx-identifier="identities-button-create-new-identity" (click)="createNewIdentity3()" class="imx-right-button">
+    <eui-icon icon="add"></eui-icon>
+    <span translate>#LDS#Create Robot</span>
   </button>
   <mat-menu #menu="matMenu">
     <button *ngIf="isManagerForPersons && !isAdmin" mat-menu-item data-imx-identifier="identities-menu-item-download-report" (click)="personsManagedReport()">
