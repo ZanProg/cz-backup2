@@ -205,13 +205,10 @@ export class CreateNewIdentity2Component implements OnDestroy {
 
     // Tega spremenis
     const customColumns = [
-      'EmployeeType',
-      'PersonnelNumber',
       'FirstName',
       'LastName',
       'Salutation',
       'Title',
-      'DefaultEmailAddress',
       'ContactEmail',
       'PhoneMobile',
       'UID_FirmPartner',
@@ -227,13 +224,16 @@ export class CreateNewIdentity2Component implements OnDestroy {
       'EntryDate',
       'ExitDate',
       'JPegPhoto',
-      'Remarks'
+      'Remarks',
+      'EmployeeType',
+      'IsExternal',
     ];
 
     const readOnlyColumns = ['UID_PersonHead'];
 
     const defaultValues = {
       'EmployeeType': 'Consultant', // Set your default value here,
+      'IsExternal': true
     };
 
     this.cdrListCustom = this.cdrFactoryService.buildCdrFromColumnList2(this.data.selectedIdentity.GetEntity(), customColumns, readOnlyColumns, defaultValues);

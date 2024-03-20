@@ -317,7 +317,20 @@ export class IdentitySidesheetComponent implements OnInit, OnDestroy {
     this.isActiveFormControl.setValue(!this.data.selectedIdentity.IsInActive.value);
     this.detailsFormGroup.addControl(this.data.selectedIdentity.IsInActive.Column.ColumnName, this.isActiveFormControl);
 
-    const personalColumns = this.data.projectConfig.PersonConfig.VI_Employee_MasterData_Attributes;
+
+    const customPersonalColumns = [
+      'LastName',
+      'FirstName',
+      'MiddleName',
+      'BirthDate',
+      'PersonnelNumber',
+      'Gender',
+      'CentralAccount',
+      'DefaultEmailAddress',
+      'IsPwdResetByHelpdeskAllowed'
+    ];
+    // const personalColumns = this.data.projectConfig.PersonConfig.VI_Employee_MasterData_Attributes;
+    const personalColumns = customPersonalColumns;
     this.cdrListPersonal = this.cdrFactoryService.buildCdrFromColumnList(this.data.selectedIdentity.GetEntity(), personalColumns, !this.data.canEdit);
 
     const organizationalColumns = this.data.projectConfig.PersonConfig.VI_Employee_MasterData_OrganizationalAttributes;

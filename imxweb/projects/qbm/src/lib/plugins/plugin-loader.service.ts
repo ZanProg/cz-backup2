@@ -175,6 +175,7 @@ export class PluginLoaderService {
     for (let i = 0; i < modules.length; i++) {
       try {
         let m = modules[i] as any;
+        console.dir(`MODULESSSSXX: ${m.value['att']}`);
         let module = m.value[this.plugins[i].Name as any];
         createNgModuleRef(module, this.injector);
         this.logger.debug(this, '▶️ Instance ready');

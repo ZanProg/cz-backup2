@@ -38,7 +38,7 @@ export class FileUploadsComponent implements OnInit {
     // };
     
 
-    this.http.post('https://srv-im1:3210/api/upload', fd)
+    this.http.post('https://idmweb1wt2.rb.cz/api/upload', fd)
       .subscribe(res => {
         console.log(res);
         this.snackbar.open({ key: '#LDS#The file has been successfully uploaded.' });
