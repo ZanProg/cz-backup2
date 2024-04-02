@@ -194,10 +194,10 @@ export class IdentitiesModule {
         return;
       }
       return {
-        instance: Identities2Component,
+        instance: DataExplorerIdentitiesComponent,
         sortOrder: 1,
         name: 'identities',
-        caption: '#LDS#Identities2',
+        caption: '#LDS#Identities',
         icon: 'contactinfo',
         contextId: HELP_CONTEXTUAL.DataExplorerIdentities
       };
@@ -205,33 +205,17 @@ export class IdentitiesModule {
   }
 
   private setupMyResponsibilitiesView(): void {
-    // this.myResponsibilitiesRegistryService.registerFactory(
-    //   (preProps: string[], groups: string[]) => ({
-    //     if (!isPersonManager(groups)) {
-    //       return;
-    //     }
-    //     return {
-    //       instance: Identities2Component,
-    //       sortOrder: 1,
-    //       name: 'identities',
-    //       caption: '#LDS#Identities2',
-    //       contextId: HELP_CONTEXTUAL.MyResponsibilitiesIdentities
-    //     };
-    //   }));
-    this.myResponsibilitiesRegistryService.registerFactory(
-      (preProps: string[], features: string[]) => ({
+    this.myResponsibilitiesRegistryService.registerFactory((preProps: string[], groups: string[]) => {
+      if (!isPersonManager(groups)) {
+        return;
+      }
+      return {
         instance: DataExplorerIdentitiesComponent,
         sortOrder: 1,
         name: 'identities',
         caption: '#LDS#Identities',
         contextId: HELP_CONTEXTUAL.MyResponsibilitiesIdentities
-      }),
-      (preProps: string[], features: string[]) => ({
-        instance: Identities2Component,
-        sortOrder: 2,
-        name: 'Identities2',
-        caption: '#LDS#Identities2',
-        contextId: HELP_CONTEXTUAL.MyResponsibilitiesIdentities
-      }));
+      };
+    });
   }
 }

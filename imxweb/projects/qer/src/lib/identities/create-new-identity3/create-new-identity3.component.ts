@@ -205,6 +205,7 @@ export class CreateNewIdentity3Component implements OnDestroy {
 
     // Tega spremenis - Identity data / Writable attributes    
     const customColumns = [
+      // 'PersonnelNumber',
       'FirstName',
       'LastName',
       'DefaultEmailAddress',
@@ -216,10 +217,14 @@ export class CreateNewIdentity3Component implements OnDestroy {
       'EmployeeType',
     ];
 
-    const readOnlyColumns = ['UID_PersonHead'];
+    const insertedExitDate = new Date();
+    insertedExitDate.setFullYear(insertedExitDate.getFullYear() + 1);
+
+    const readOnlyColumns = ['EmployeeType'];
     
     const defaultValues = {
       'EmployeeType': 'Other', // Set your default value here,
+      'ExitDate':  insertedExitDate
     };
 
     this.cdrListCustom = this.cdrFactoryService.buildCdrFromColumnList2(this.data.selectedIdentity.GetEntity(), customColumns, readOnlyColumns, defaultValues);

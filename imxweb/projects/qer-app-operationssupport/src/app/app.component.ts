@@ -301,7 +301,23 @@ export class AppComponent implements OnInit, OnDestroy {
           });
         }
         return menu;
-      }
+      },
+      (__: string[], groups: string[]) => {
+        const menu = {
+          id: 'OpsWeb_ROOT_Dashboard2',
+          title: '#LDS#Dashboard',
+          sorting: '60',
+          items: [
+            {
+              id: 'OpsWeb_Synchronization_Dashboard',
+              title: '#LDS#Admin Dashboard',
+              route: 'adminDashboard',
+              sorting: '40-10',
+            },
+          ],
+        };
+        return menu;
+      },
     );
 
     return null;

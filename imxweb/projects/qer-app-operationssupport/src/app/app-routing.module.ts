@@ -49,6 +49,7 @@ import { OutstandingManagerGuardService } from './guards/outstanding-manager-gua
 import { ObjectsByIdComponent } from './processes/objects-by-id/objects-by-id.component';
 import { DataChangesComponent } from './data-changes/data-changes.component';
 import { DbQueueComponent } from './db-queue/db-queue.component';
+import { AdminDashboardsComponent } from './admin-dashboard/admin-dashboards/admin-dashboards.component'
 
 const routes: Routes = [
   {
@@ -115,6 +116,12 @@ const routes: Routes = [
   {
     path: 'unresolvedRefs',
     component: UnresolvedRefsComponent,
+    canActivate: [RouteGuardService],
+    resolve: [RouteGuardService],
+  },
+  {
+    path: 'adminDashboard',
+    component: AdminDashboardsComponent,
     canActivate: [RouteGuardService],
     resolve: [RouteGuardService],
   },

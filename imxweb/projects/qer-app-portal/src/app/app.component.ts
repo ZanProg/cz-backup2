@@ -29,7 +29,7 @@ import { Subscription } from 'rxjs';
 
 import { AuthenticationService, IeWarningService, ImxTranslationProviderService, ISessionState, MenuService, SplashService, SystemInfoService } from 'qbm';
 
-import { ProjectConfigurationService, UserModelService, SettingsComponent, QerApiService } from 'qer';
+import { ProjectConfigurationService, UserModelService, SettingsComponent, QerApiService, FeatureConfigService } from 'qer';
 
 import { ProfileSettings, QerProjectConfig } from 'imx-api-qer';
 import { ProjectConfig } from 'imx-api-qbm';
@@ -38,6 +38,8 @@ import { EuiLoadingService, EuiTheme, EuiThemeService, EuiTopNavigationItem } fr
 import { TranslateService } from '@ngx-translate/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { getBaseHref, HEADLESS_BASEHREF } from './app.module';
+import { FeatureConfig } from 'imx-api-qer';
+
 
 @Component({
   selector: 'imx-root',
@@ -57,7 +59,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private readonly authentication: AuthenticationService,
     private readonly router: Router,
     private readonly splash: SplashService,
-    menuService: MenuService,
+    private readonly menuService: MenuService,
     userModelService: UserModelService,
     systemInfoService: SystemInfoService,
     ieWarningService: IeWarningService,
@@ -68,6 +70,9 @@ export class AppComponent implements OnInit, OnDestroy {
     private readonly errorHandler: ErrorHandler,
     private readonly translationProvider: ImxTranslationProviderService,
     private readonly translateService: TranslateService,
+    private readonly busyService: EuiLoadingService,
+    private readonly featureService: FeatureConfigService,
+
     @Inject(APP_BASE_HREF) private baseHref: string
   ) {
     this.subscriptions.push(
@@ -86,6 +91,8 @@ export class AppComponent implements OnInit, OnDestroy {
           // Close the splash screen that opened in app service initialisation
           // Needs to close here when running in containers (auth skipped)
           splash.close();
+
+          await this.setupMenu();
 
           const config: QerProjectConfig & ProjectConfig = await projectConfig.getConfig();
           const features = (await userModelService.getFeatures()).Features;
@@ -115,6 +122,47 @@ export class AppComponent implements OnInit, OnDestroy {
       })
     );
     this.setupRouter();
+  }
+
+  private async setupMenu(): Promise<void> {
+    let featureConfig: FeatureConfig;
+    const overlay = this.busyService.show();
+    try {
+      featureConfig = await this.featureService.getFeatureConfig();
+    } finally {
+      this.busyService.hide(overlay);
+    }
+
+    this.menuService.addMenuFactories(
+      () => {
+        return null
+      },
+      (__: string[], groups: string[]) => {
+        return {
+          id: 'ROOT_FILEUPLOADSS',
+          title: '#LDS#Additional Functionalities',
+          items: [
+            {
+              id: 'FILE_UPLOADS',
+              route: 'file-upload',
+              title: 'Upload Files',
+            },
+            {
+              id: 'CREATE_EXTERNAL',
+              route: 'create-external',
+              title: 'Create External',
+            },
+            {
+              id: 'CREATE_ROBOT',
+              route: 'create-robot',
+              title: 'Create Robot',
+            }
+          ]
+        };
+      },
+    );
+
+    return null;
   }
 
   /**

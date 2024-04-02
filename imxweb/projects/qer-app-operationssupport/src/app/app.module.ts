@@ -69,6 +69,7 @@ import { DataChangesModule } from './data-changes/data-changes.module';
 import { DbQueueModule } from './db-queue/db-queue.module';
 import { OpsSqlWizardApiService } from './base/ops-sql-wizard-api.service';
 import { QerModule } from 'qer';
+import { AdminDashboardModule } from './admin-dashboard/admin-dashboard.module'
 
 @NgModule({
   declarations: [AppComponent],
@@ -84,6 +85,7 @@ import { QerModule } from 'qer';
     MastHeadModule,
     MenuModule,
     DbQueueModule,
+    AdminDashboardModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

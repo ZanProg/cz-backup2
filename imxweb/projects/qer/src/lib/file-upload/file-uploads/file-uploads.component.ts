@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpClientXsrfModule, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FileSelectorService, SnackBarService } from 'qbm';
 
@@ -28,20 +28,34 @@ export class FileUploadsComponent implements OnInit {
   }
 
   onUpload() {
+
+    let url = window.location.hostname;
+
     const fd = new FormData();
     fd.append('file', this.selectedFile, this.fileName);
 
-    // const options = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'multipart/form-data' // Ensure this header is set
-    //   })
-    // };
-    
 
-    this.http.post('https://idmweb1wt2.rb.cz/api/upload', fd)
+    const xsrfToken = document.cookie
+			.split('; ')
+			.find(cookie => cookie.startsWith('XSRF-TOKEN='))
+			.split('=')[1];
+
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+				'X-XSRF-TOKEN': xsrfToken
+      })
+    };
+
+    // this.http.post('https://localhost:8182/portal/uniteplugin/upload', fd, options)
+    this.http.post(`https://${url}/ApiServer/portal/uniteplugin/upload`, fd, options)
       .subscribe(res => {
         console.log(res);
         this.snackbar.open({ key: '#LDS#The file has been successfully uploaded.' });
+      },
+      error =>{
+        console.error(error);
+        this.snackbar.open({ key: '#LDS#An error occurred while uploading the file.' });
       });
   }
 }

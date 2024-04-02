@@ -32,7 +32,7 @@ export const environment = {
   production: false,
   clientUrl: '',
   // clientUrl: 'https://srv-im1/ApiServer',
-  // clientUrl: '',
+  // clientUrl: 'http://localhost:8182',
   appName: 'qer-app-portal',
   appVersion: '1.0.0'
 };

@@ -305,7 +305,7 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
   public async createNewIdentity2(): Promise<void> {
     await this.sideSheet
       .open(CreateNewIdentity2Component, {
-        title: await this.translate.get('#LDS#Create Identity 2').toPromise(),
+        title: await this.translate.get('#LDS#Create External').toPromise(),
         padding: '0px',
         width: 'max(650px, 65%)',
         disableClose: true,
@@ -325,7 +325,7 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
   public async createNewIdentity3(): Promise<void> {
     await this.sideSheet
       .open(CreateNewIdentity3Component, {
-        title: await this.translate.get('#LDS#Create Identity 2').toPromise(),
+        title: await this.translate.get('#LDS#Create Robot').toPromise(),
         padding: '0px',
         width: 'max(650px, 65%)',
         disableClose: true,

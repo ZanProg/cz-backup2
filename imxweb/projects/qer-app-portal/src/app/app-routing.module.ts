@@ -33,6 +33,10 @@ import {
   StartComponent
 } from 'qer';
 import { FileUploadsComponent } from '../../../qer/src/lib/file-upload/file-uploads/file-uploads.component'
+import { CreateExternalComponent } from 'qer';
+import { CreateRobotComponent } from 'qer';
+import { ViewExternalComponent } from 'qer';
+import { ViewInternalComponent } from 'qer';
 
 const externalUrlProvider = new InjectionToken('externalUrlRedirectResolver');
 
@@ -63,6 +67,36 @@ const routes: Routes = [
     resolve: {
       url: externalUrlProvider,
     }
+  },
+  { 
+    path: 'file-upload',
+    component: FileUploadsComponent,
+    canActivate: [RouteGuardService],
+    resolve: [RouteGuardService]
+  },
+  { 
+    path: 'create-external',
+    component: CreateExternalComponent,
+    canActivate: [RouteGuardService],
+    resolve: [RouteGuardService]
+  },
+  { 
+    path: 'create-robot',
+    component: CreateRobotComponent,
+    canActivate: [RouteGuardService],
+    resolve: [RouteGuardService]
+  },
+  { 
+    path: 'view-external',
+    component: ViewExternalComponent,
+    canActivate: [RouteGuardService],
+    resolve: [RouteGuardService]
+  },
+  { 
+    path: 'view-internal',
+    component: ViewInternalComponent,
+    canActivate: [RouteGuardService],
+    resolve: [RouteGuardService]
   },
   {
     path: 'passwordquestions',

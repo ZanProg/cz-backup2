@@ -57,27 +57,28 @@ export class QerService {
 
   private setupMenu(): void {
     this.menuService.addMenuFactories((preProps: string[], features: string[]) => {
-      return {
-        id: 'ROOT_FILEUPLOADS',
-        title: '#LDS#Additional Functionalities',
-        items: [
-          {
-            id: 'FILE_UPLOADS',
-            route: 'file-upload',
-            title: 'Upload Files',
-          },
-          {
-            id: 'CREATE_EXTERNAL',
-            route: 'create-external',
-            title: 'Create External',
-          },
-          {
-            id: 'CREATE_ROBOT',
-            route: 'create-robot',
-            title: 'Create Robot',
-          }
-        ]
-      };
+      // return {
+      //   id: 'ROOT_FILEUPLOADS',
+      //   title: '#LDS#Additional Functionalities',
+      //   items: [
+      //     {
+      //       id: 'FILE_UPLOADS',
+      //       route: 'file-upload',
+      //       title: 'Upload Files',
+      //     },
+      //     {
+      //       id: 'CREATE_EXTERNAL',
+      //       route: 'create-external',
+      //       title: 'Create External',
+      //     },
+      //     {
+      //       id: 'CREATE_ROBOT',
+      //       route: 'create-robot',
+      //       title: 'Create Robot',
+      //     }
+      //   ]
+      // };
+      return null;
     });
   }
 }

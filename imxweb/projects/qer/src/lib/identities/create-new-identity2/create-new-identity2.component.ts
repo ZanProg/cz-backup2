@@ -229,11 +229,15 @@ export class CreateNewIdentity2Component implements OnDestroy {
       'IsExternal',
     ];
 
-    const readOnlyColumns = ['UID_PersonHead'];
+    const insertedExitDate = new Date();
+    insertedExitDate.setFullYear(insertedExitDate.getFullYear() + 1);
+
+    const readOnlyColumns = ['EmployeeType'];
 
     const defaultValues = {
       'EmployeeType': 'Consultant', // Set your default value here,
-      'IsExternal': true
+      'IsExternal': true,
+      'ExitDate':  insertedExitDate
     };
 
     this.cdrListCustom = this.cdrFactoryService.buildCdrFromColumnList2(this.data.selectedIdentity.GetEntity(), customColumns, readOnlyColumns, defaultValues);
