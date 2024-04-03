@@ -33,7 +33,7 @@ import packageJson from '../../package.json';
 
 export const environment = {
   production: false,
-  clientUrl: '',
+  clientUrl: 'http://localhost:8182',
   // clientUrl: '',
   appName: packageJson.name,
   appVersion: packageJson.version

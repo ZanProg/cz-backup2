@@ -56,6 +56,14 @@ public buildCdrFromColumnList2(entity: IEntity, columnNames: string[], readOnlyC
     .filter((cdr) => cdr != null);
 }
 
+public buildCdrFromColumnList3(entity: IEntity, columnNames: string[], readOnlyColumns: string[] = [], defaultValues: Record<string, any> = {}): ColumnDependentReference[] {
+  return columnNames
+    .map((column) => {
+      // Create and return the CDR object
+      return this.buildCdr(entity, column, false, undefined, defaultValues[column]);
+    })
+    .filter((cdr) => cdr != null);
+}
   
 
   /**
@@ -87,9 +95,9 @@ public buildCdrFromColumnList2(entity: IEntity, columnNames: string[], readOnlyC
   
     if (column == null) return null;
   
-    if (readOnly) {
-      return new BaseReadonlyCdr(column, columnDisplay, true, defaultValue);
-    } else {
+    // if (readOnly) {
+    //   return new BaseReadonlyCdr(column, columnDisplay, true, defaultValue);
+    // } else {
       // Check if defaultValue is provided and if it's for the EmployeeType column
       if (defaultValue !== undefined && columnName === 'EmployeeType') {
         // Create BaseCdr object with the default value
@@ -98,7 +106,7 @@ public buildCdrFromColumnList2(entity: IEntity, columnNames: string[], readOnlyC
         // Create BaseCdr object without the default value
         return new BaseCdr(column, columnDisplay, false, defaultValue);
       }
-    }
+    // }
   }
   
 

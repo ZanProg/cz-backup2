@@ -309,13 +309,16 @@ export class AppComponent implements OnInit, OnDestroy {
           sorting: '60',
           items: [
             {
-              id: 'OpsWeb_Synchronization_Dashboard',
-              title: '#LDS#Admin Dashboard',
-              route: 'adminDashboard',
-              sorting: '40-10',
+              id: 'QER_Request_PendingRequests2',
+              navigationCommands: {
+                commands: ['itshop', 'approvals']
+              },
+              title: '#LDS#Menu Entry Pending requests',
+              sorting: '10-30',
             },
           ],
         };
+        
         return menu;
       },
     );

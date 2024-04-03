@@ -50,6 +50,7 @@ import { ObjectsByIdComponent } from './processes/objects-by-id/objects-by-id.co
 import { DataChangesComponent } from './data-changes/data-changes.component';
 import { DbQueueComponent } from './db-queue/db-queue.component';
 import { AdminDashboardsComponent } from './admin-dashboard/admin-dashboards/admin-dashboards.component'
+import { ApprovalsComponent } from 'qer/lib/itshopapprove/approvals.component';
 
 const routes: Routes = [
   {

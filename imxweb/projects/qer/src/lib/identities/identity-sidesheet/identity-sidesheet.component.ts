@@ -24,6 +24,7 @@
  *
  */
 
+import { ChangeDetectorRef } from '@angular/core';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Component, OnDestroy, Inject, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
@@ -78,6 +79,7 @@ export class IdentitySidesheetComponent implements OnInit, OnDestroy {
   private readonly subscriptions: Subscription[] = [];
   private currentUserUid: string;
   private featureConfig: FeatureConfig;
+  dummyTrigger: boolean = false;
 
   constructor(
     @Inject(EUI_SIDESHEET_DATA)
@@ -103,6 +105,7 @@ export class IdentitySidesheetComponent implements OnInit, OnDestroy {
     private readonly extService: ExtService,    
     private readonly featureConfigService: FeatureConfigService,
     private readonly cdrFactoryService: CdrFactoryService,
+    private cdr: ChangeDetectorRef,
     authentication: AuthenticationService,
     confirm: ConfirmationService
   ) {
@@ -118,6 +121,7 @@ export class IdentitySidesheetComponent implements OnInit, OnDestroy {
         }
       })
     );
+
 
     this.subscriptions.push(authentication.onSessionResponse.subscribe((sessionState) => (this.currentUserUid = sessionState.UserUid)));
 
@@ -327,20 +331,62 @@ export class IdentitySidesheetComponent implements OnInit, OnDestroy {
       'Gender',
       'CentralAccount',
       'DefaultEmailAddress',
-      'IsPwdResetByHelpdeskAllowed'
+      // 'IsPwdResetByHelpdeskAllowed'
+    ];
+
+    const customColumns = [
+      'FirstName',
+      'LastName',
+      // Title before name '',
+      // Title after name '',
+      'Title',
+      'PhoneMobile',
+      'ContactEmail',
+      'CCC_UID_JobPosition',
+      'UID_FirmPartner',
+      'UID_Department',
+      'UID_PersonHead',
+      'CCC_ContractNumber',
+      'UID_ProfitCenter',
+      'CCC_Capex',
+      'ExitDate',
+      'JPegPhoto',
     ];
     // const personalColumns = this.data.projectConfig.PersonConfig.VI_Employee_MasterData_Attributes;
-    const personalColumns = customPersonalColumns;
-    this.cdrListPersonal = this.cdrFactoryService.buildCdrFromColumnList(this.data.selectedIdentity.GetEntity(), personalColumns, !this.data.canEdit);
+    // const personalColumns = customPersonalColumns;
+    // this.cdrListPersonal = this.cdrFactoryService.buildCdrFromColumnList(this.data.selectedIdentity.GetEntity(), personalColumns, !this.data.canEdit);
 
-    const organizationalColumns = this.data.projectConfig.PersonConfig.VI_Employee_MasterData_OrganizationalAttributes;
-    this.cdrListOrganizational = this.cdrFactoryService.buildCdrFromColumnList(
-      this.data.selectedIdentity.GetEntity(),
-      organizationalColumns, !this.data.canEdit
-    );
+    const personalColumns = customColumns;
+    this.cdrListPersonal = this.cdrFactoryService.buildCdrFromColumnList3(this.data.selectedIdentity.GetEntity(), personalColumns);
 
-    const localityColumns = this.data.projectConfig.PersonConfig.VI_Employee_MasterData_LocalityAttributes;
-    this.cdrListLocality = this.cdrFactoryService.buildCdrFromColumnList(this.data.selectedIdentity.GetEntity(), localityColumns, !this.data.canEdit);
+    this.cdrListPersonal.forEach((cdr: ColumnDependentReference) => {
+      const columnName = cdr.column.ColumnName;
+      const metadata = cdr.column.GetMetadata();
+      const dataType = cdr.column.GetType();
+      
+      console.log(`Column Name: ${columnName}`);
+      console.log(`Data Type: ${dataType}`);
+      console.log(`Metadata:`, metadata); // This will contain additional information about the column
+
+      if (columnName === 'UID_PersonHead') {
+        metadata['IsReadOnly'] = false;
+        this.dummyTrigger = !this.dummyTrigger;
+        console.log(`Updated Metadata:`, metadata); // Confirm the update
+      }
+  });
+  setTimeout(()=>{
+    this.cdr.detectChanges();
+  }, 3000);
+
+
+    // const organizationalColumns = this.data.projectConfig.PersonConfig.VI_Employee_MasterData_OrganizationalAttributes;
+    // this.cdrListOrganizational = this.cdrFactoryService.buildCdrFromColumnList(
+    //   this.data.selectedIdentity.GetEntity(),
+    //   organizationalColumns, !this.data.canEdit
+    // );
+
+    // const localityColumns = this.data.projectConfig.PersonConfig.VI_Employee_MasterData_LocalityAttributes;
+    // this.cdrListLocality = this.cdrFactoryService.buildCdrFromColumnList(this.data.selectedIdentity.GetEntity(), localityColumns, !this.data.canEdit);
 
     this.isSecurityIncidentFormControl.setValue(this.data.selectedIdentity.IsSecurityIncident.value);
     this.detailsFormGroup.addControl(this.data.selectedIdentity.IsSecurityIncident.Column.ColumnName, this.isSecurityIncidentFormControl);
