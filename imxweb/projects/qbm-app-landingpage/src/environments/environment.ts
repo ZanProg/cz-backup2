@@ -33,8 +33,13 @@ import packageJson from '../../package.json';
 
 export const environment = {
   production: false,
-  clientUrl: 'http://localhost:8182',
-  // clientUrl: '',
+  // clientUrl: 'http://localhost:8182',
+  // clientUrl: 'https://idmweb1wt2.rb.cz/ApiServer/',
+ clientUrl: '',
+
+  // clientUrl: 'https://srv-im1/API2',
+  // clientUrl: 'http://rfbapp.rfbidm.devel/ApiServer',
+  // clientUrl: 'https://srv-im1/ApiServer',
   appName: packageJson.name,
   appVersion: packageJson.version
 };

@@ -147,15 +147,25 @@ export class AppComponent implements OnInit, OnDestroy {
               route: 'file-upload',
               title: 'Upload Files',
             },
+            // {
+            //   id: 'CREATE_EXTERNAL',
+            //   route: 'create-external',
+            //   title: 'Create External',
+            // },
+            // {
+            //   id: 'CREATE_ROBOT',
+            //   route: 'create-robot',
+            //   title: 'Create Robot',
+            // },
             {
-              id: 'CREATE_EXTERNAL',
-              route: 'create-external',
-              title: 'Create External',
+              id: 'EDIT_ROBOT',
+              route: 'edit-robot-view',
+              title: 'Robot identities',
             },
             {
-              id: 'CREATE_ROBOT',
-              route: 'create-robot',
-              title: 'Create Robot',
+              id: 'EDIT_EXTERNAL',
+              route: 'edit-external-view',
+              title: 'External identities',
             }
           ]
         };

@@ -38,6 +38,7 @@ import { UserModelService } from '../../user/user-model.service';
 import { DashboardService } from '../start/dashboard.service';
 import { CreateNewIdentityComponent } from '../../identities/create-new-identity/create-new-identity.component';
 import { IdentitiesService } from '../../identities/identities.service';
+import { EditExternalIdentityFormDashboardComponent } from '../../identities/edit-external-identity-form-dashboard/edit-external-identity-form-dashboard.component';
 
 @Component({
   templateUrl: './businessowner-chartsummary.component.html',
@@ -130,6 +131,88 @@ export class BusinessOwnerChartSummaryComponent implements OnInit {
 
     await this.loadDirectReports();
   }
+
+  // moj del
+  public async openExternalEditIdentitySidesheet(identity: PortalPersonReports): Promise<void> {
+    const uid = identity.GetEntity().GetKeys()[0];
+    let selectedIdentity: PortalPersonReports;
+
+    let overlayRef: OverlayRef;
+    setTimeout(() => (overlayRef = this.busyService.show()));
+    try {
+      const identityCollection = await this.qerClient.typedClient.PortalPersonReportsInteractive.Get_byid(uid);
+      selectedIdentity = identityCollection?.Data?.[0];
+    } finally {
+      setTimeout(() => this.busyService.hide(overlayRef));
+    }
+
+    if (!selectedIdentity) {
+      this.errorHandler.handleError('Identity could not be loaded.');
+      return;
+    }
+
+    await this.sideSheet
+      .open(EditExternalIdentityFormDashboardComponent, {
+        title: await this.translate.get('#LDS# Edit External Identity').toPromise(),
+        subTitle: selectedIdentity.GetEntity().GetDisplay(),
+        padding: '0px',
+        disableClose: true,
+        width: 'max(768px, 90%)',
+        icon: 'contactinfo',
+        testId: 'businessowner-identity-sidesheet',
+        data: {
+          isAdmin: false,
+          projectConfig: this.projectConfig,
+          selectedIdentity,
+          canEdit: true
+        },
+      })
+      .afterClosed()
+      .toPromise();
+
+    await this.loadDirectReports();
+  }
+
+  public async openInternalEditIdentitySidesheet(identity: PortalPersonReports): Promise<void> {
+    const uid = identity.GetEntity().GetKeys()[0];
+    let selectedIdentity: PortalPersonReports;
+
+    let overlayRef: OverlayRef;
+    setTimeout(() => (overlayRef = this.busyService.show()));
+    try {
+      const identityCollection = await this.qerClient.typedClient.PortalPersonReportsInteractive.Get_byid(uid);
+      selectedIdentity = identityCollection?.Data?.[0];
+    } finally {
+      setTimeout(() => this.busyService.hide(overlayRef));
+    }
+
+    if (!selectedIdentity) {
+      this.errorHandler.handleError('Identity could not be loaded.');
+      return;
+    }
+
+    await this.sideSheet
+      .open(IdentitySidesheetComponent, {
+        title: await this.translate.get('#LDS# Edit Internal Identity').toPromise(),
+        subTitle: selectedIdentity.GetEntity().GetDisplay(),
+        padding: '0px',
+        disableClose: true,
+        width: 'max(768px, 90%)',
+        icon: 'contactinfo',
+        testId: 'businessowner-identity-sidesheet',
+        data: {
+          isAdmin: false,
+          projectConfig: this.projectConfig,
+          selectedIdentity,
+          canEdit: true
+        },
+      })
+      .afterClosed()
+      .toPromise();
+
+    await this.loadDirectReports();
+  }
+
 
   public async openCreateNewIdentitySidesheet(): Promise<void> {
    const identityCreated = await this.sideSheet.open(CreateNewIdentityComponent, {

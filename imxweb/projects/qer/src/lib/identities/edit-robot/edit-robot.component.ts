@@ -1,71 +1,31 @@
-/*
- * ONE IDENTITY LLC. PROPRIETARY INFORMATION
- *
- * This software is confidential.  One Identity, LLC. or one of its affiliates or
- * subsidiaries, has supplied this software to you under terms of a
- * license agreement, nondisclosure agreement or both.
- *
- * You may not copy, disclose, or use this software except in accordance with
- * those terms.
- *
- *
- * Copyright 2023 One Identity LLC.
- * ALL RIGHTS RESERVED.
- *
- * ONE IDENTITY LLC. MAKES NO REPRESENTATIONS OR
- * WARRANTIES ABOUT THE SUITABILITY OF THE SOFTWARE,
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
- * TO THE IMPLIED WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE, OR
- * NON-INFRINGEMENT.  ONE IDENTITY LLC. SHALL NOT BE
- * LIABLE FOR ANY DAMAGES SUFFERED BY LICENSEE
- * AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
- * THIS SOFTWARE OR ITS DERIVATIVES.
- *
- */
-
-import { Component, OnInit, OnDestroy, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { EuiLoadingService, EuiSidesheetService } from '@elemental-ui/core';
+import { EuiSidesheetService, EuiLoadingService } from '@elemental-ui/core';
 import { TranslateService } from '@ngx-translate/core';
+import { ProjectConfig } from 'imx-api-qbm';
+import { PortalPersonAll, PortalPersonReports, PortalAdminPerson, ViewConfigData } from 'imx-api-qer';
+import { CollectionLoadParameters, EntitySchema, DisplayColumns, DataModelProperty, IClientProperty, DataModel, CompareOperator } from 'imx-qbm-dbts';
+import { HelpContextualValues, DataSourceToolbarSettings, DataSourceToolbarFilter, DataTableGroupedData, IExtension, BusyService, DataSourceToolbarGroupData, DataSourceToolbarViewConfig, ImxTranslationProviderService, ClassloggerService, AuthenticationService, SettingsService, ExtService, MessageDialogComponent, DataSourceToolbarExportMethod, SideNavigationComponent } from 'qbm';
 import { Subscription } from 'rxjs';
-
-import { PortalAdminPerson, PortalPersonAll, PortalPersonReports, ProjectConfig, ViewConfigData } from 'imx-api-qer';
-import { CollectionLoadParameters, CompareOperator, DataModel, DataModelProperty, DisplayColumns, EntitySchema, IClientProperty } from 'imx-qbm-dbts';
-import {
-  AuthenticationService,
-  BusyService,
-  ClassloggerService,
-  DataSourceToolbarExportMethod,
-  DataSourceToolbarFilter,
-  DataSourceToolbarGroupData,
-  DataSourceToolbarSettings,
-  DataSourceToolbarViewConfig,
-  DataTableGroupedData,
-  ExtService,
-  HelpContextualValues,
-  IExtension,
-  ImxTranslationProviderService,
-  MessageDialogComponent,
-  SettingsService,
-  SideNavigationComponent,
-} from 'qbm';
-import { QerPermissionsService } from '../admin/qer-permissions.service';
-import { ProjectConfigurationService } from '../project-configuration/project-configuration.service';
-import { ViewConfigService } from '../view-config/view-config.service';
-import { CreateNewIdentityComponent } from './create-new-identity/create-new-identity.component';
-import { CreateNewIdentity2Component } from './create-new-identity2/create-new-identity2.component';
-import { CreateNewIdentity3Component } from './create-new-identity3/create-new-identity3.component';
-import { IdentitiesReportsService } from './identities-reports.service';
-import { IdentitiesService } from './identities.service';
-import { IdentitySidesheetComponent } from './identity-sidesheet/identity-sidesheet.component';
+import { QerPermissionsService } from '../../admin/qer-permissions.service';
+import { ProjectConfigurationService } from '../../project-configuration/project-configuration.service';
+import { ViewConfigService } from '../../view-config/view-config.service';
+import { CreateNewIdentityComponent } from '../create-new-identity/create-new-identity.component';
+import { CreateNewIdentity2Component } from '../create-new-identity2/create-new-identity2.component';
+import { CustomIdentitySidesheetComponent } from '../custom-identity-sidesheet/custom-identity-sidesheet.component';
+import { IdentitiesReportsService } from '../identities-reports.service';
+import { IdentitiesService } from '../identities.service';
+import { CreateNewIdentity3Component } from '../create-new-identity3/create-new-identity3.component';
+import { CustomRobotSidesheetComponent } from '../custom-robot-sidesheet/custom-robot-sidesheet.component';
 
 @Component({
-  selector: 'imx-data-explorer-identities',
-  templateUrl: './identities.component.html',
-  styleUrls: ['./identities.component.scss'],
+  selector: 'ccc-edit-robot',
+  templateUrl: './edit-robot.component.html',
+  styleUrls: ['./edit-robot.component.scss']
 })
-export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideNavigationComponent {
+export class EditRobotComponent implements OnInit, OnDestroy, SideNavigationComponent {
+
+
   @Input() public applyIssuesFilter = false;
 
   /**
@@ -126,6 +86,9 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
   private get viewConfigPath(): string {
     return this.isAdmin ? 'admin/person' : 'person/reports';
   }
+  // private get viewConfigPath(): string {
+  //   return this.isAdmin ? 'person/reports' : 'admin/person';
+  // }
   @ViewChild('dynamicReport', { static: true, read: ViewContainerRef }) dynamicReport: ViewContainerRef;
 
   constructor(
@@ -144,13 +107,64 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
     settingsService: SettingsService,
     private extService: ExtService
   ) {
-    // this.navigationState = { PageSize: settingsService.DefaultPageSize, StartIndex: 0, filter: [{
-    //   ColumnName: 'IsExternal',
-    //   CompareOp: CompareOperator.Equal,
-    //   Value1: false
-    // }]};
-    this.navigationState = { PageSize: settingsService.DefaultPageSize, StartIndex: 0};
+    // Tule spremenis filter
+   // this.navigationState = { PageSize: settingsService.DefaultPageSize, StartIndex: 0, filter: [{
+     // ColumnName: 'EmployeeType',
+      //CompareOp: CompareOperator.Equal,
+      //Values: ['Other'],
+    //}]};
 
+   // this.navigationState = { PageSize: settingsService.DefaultPageSize, StartIndex: 0, filter: [{
+     // ColumnName: 'IsExternal',
+      //CompareOp: CompareOperator.Equal,
+      //Value1: true
+    //}]};
+
+    // this.navigationState = { PageSize: settingsService.DefaultPageSize, StartIndex: 0}
+    this.navigationState = { PageSize: settingsService.DefaultPageSize, StartIndex: 0, filter: [{
+      ColumnName: 'EmployeeType',
+      CompareOp: CompareOperator.Equal,
+      Value1: 'Other'
+    }]};
+    // this.navigationState = { PageSize: settingsService.DefaultPageSize, StartIndex: 0, filter: [
+    //   {Type:2,
+    //   Expression:{Expressions:
+    //     [{
+    //       PropertyId:"EmployeeType",
+    //       Operator:"=",
+    //       LogOperator:0,
+    //       Value:"Other"
+    //     }],
+    //       LogOperator:0}
+    //     }]}
+
+    // this.getDynamicMenuItems();
+    // this.init();
+    // this.navigationState = { PageSize: settingsService.DefaultPageSize, StartIndex: 0, filter: [
+    //   {Type:2,
+    //     Expression:{
+    //       Expressions:[{
+    //         PropertyId:"EmployeeType",
+    //         Operator:"=",
+    //         LogOperator:0,
+    //         Value:"Other"
+    //       }],
+    //       LogOperator:0}}
+    // ]}
+
+
+
+       
+
+   
+	//[{"ColumnName":"IsExternal","CompareOp":0,"Value1":true}]
+
+    // this.navigationState = { PageSize: settingsService.DefaultPageSize, StartIndex: 0, filter: [{
+    //   ColumnName: 'EmployeeType',
+    //   CompareOp: CompareOperator.Equal,
+    //   Value1: true
+    // }]};
+    // this.navigationState = { PageSize: settingsService.DefaultPageSize, StartIndex: 0};
     this.authorityDataDeleted$ = this.identitiesService.authorityDataDeleted.subscribe(() => this.navigate());
 
     this.sessionResponse$ = this.authService.onSessionResponse.subscribe(async (session) => {
@@ -160,6 +174,8 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
         this.isAuditor = await qerPermissionService.isAuditor();
       }
     });
+
+    // this.navigate()
   }
 
   get isMobile(): boolean {
@@ -167,8 +183,30 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
   }
 
   public async ngOnInit(): Promise<void> {
+    // console.dir(this.navigationState)
+    // let externalReports;
+
+    // fetch(`https://${window.location.hostname}/ApiServer/portal/person/reports`, 
+    //   {
+		// 		method: 'GET',
+		// 	}).then(response => {
+		// 			if (!response.ok) {
+		// 				throw new Error('Network response was not ok (GET ping)');
+		// 			}
+		// 			return response.json();
+		// 		}).then(data => {
+    //         console.log(data);
+            
+    //         const externalReports = data.Entities.filter(entity => entity.Columns.IsExternal.Value == true);
+    //         console.log(externalReports);
+		// 	  })
+    // console.log(`External reports object: ${externalReports}`);
+    
+
     this.getDynamicMenuItems();
     await this.init();
+
+    
   }
 
   public ngOnDestroy(): void {
@@ -219,8 +257,6 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
    *
    * @param identity Selected identity.
    */
-
-  // tole odpre indentiteto
   public async onIdentityChanged(identity: PortalPersonAll | PortalPersonReports): Promise<void> {
     const overlayRef = this.busyServiceElemental.show();
 
@@ -304,10 +340,51 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
     return this.navigate();
   }
 
+  // ustvarimo novega robota
+  public async createNewRobot(): Promise<void> {
+    await this.sideSheet
+      .open(CreateNewIdentity3Component, {
+        title: await this.translate.get('#LDS# Create Robot Identity').toPromise(),
+        padding: '0px',
+        width: 'max(650px, 65%)',
+        disableClose: true,
+        testId: 'create-new-identity-sidesheet',
+        icon: 'contactinfo',
+        data: {
+          selectedIdentity: await this.identitiesService.createEmptyEntity(),
+          projectConfig: this.projectConfig,
+        },
+      })
+      .afterClosed()
+      .toPromise();
+
+    return this.navigate();
+  }
+
+  public async createNewExternalIdentity(): Promise<void> {
+    await this.sideSheet
+      .open(CreateNewIdentity2Component, {
+        title: await this.translate.get('#LDS#Heading Create Identity').toPromise(),
+        padding: '0px',
+        width: 'max(650px, 65%)',
+        disableClose: true,
+        testId: 'create-new-identity-sidesheet',
+        icon: 'contactinfo',
+        data: {
+          selectedIdentity: await this.identitiesService.createEmptyEntity(),
+          projectConfig: this.projectConfig,
+        },
+      })
+      .afterClosed()
+      .toPromise();
+
+    return this.navigate();
+  }
+
   public async createNewIdentity2(): Promise<void> {
     await this.sideSheet
       .open(CreateNewIdentity2Component, {
-        title: await this.translate.get('#LDS#Create External').toPromise(),
+        title: await this.translate.get('#LDS#Create Identity 2').toPromise(),
         padding: '0px',
         width: 'max(650px, 65%)',
         disableClose: true,
@@ -324,26 +401,62 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
     return this.navigate();
   }
 
-  public async createNewIdentity3(): Promise<void> {
-    await this.sideSheet
-      .open(CreateNewIdentity3Component, {
-        title: await this.translate.get('#LDS#Create Robot').toPromise(),
-        padding: '0px',
-        width: 'max(650px, 65%)',
-        disableClose: true,
-        testId: 'create-new-identity-sidesheet',
-        icon: 'contactinfo',
-        data: {
-          selectedIdentity: await this.identitiesService.createEmptyEntity(),
-          projectConfig: this.projectConfig,
-        },
-      })
-      .afterClosed()
-      .toPromise();
+  // private async init(): Promise<void> {
+  //   const isBusy = this.busyService.beginBusy();
 
-    return this.navigate();
-  }
+  //   this.entitySchemaPersonReports = this.identitiesService.personReportsSchema;
+  //   try {
+  //     this.projectConfig = await this.configService.getConfig();
+  //     this.displayedColumns = [
+  //       this.entitySchemaPersonReports.Columns[DisplayColumns.DISPLAY_PROPERTYNAME],
+  //       this.entitySchemaPersonReports.Columns.IsSecurityIncident,
+  //       this.entitySchemaPersonReports.Columns.UID_Department,
+  //     ];
 
+  //     if (!this.isAdmin) {
+  //       console.dir(this.entitySchemaPersonReports.Columns.IsExternal, { depth: null});
+  //       this.displayedColumns.push(
+  //         this.entitySchemaPersonReports.Columns.IdentityType,
+  //         this.entitySchemaPersonReports.Columns.EmployeeType,
+  //         this.entitySchemaPersonReports.Columns.IsExternal
+  //       );
+  //     }
+
+  //     // Ensure this column is always added last
+  //     this.displayedColumns.push(this.entitySchemaPersonReports.Columns.XMarkedForDeletion);
+
+  //     this.displayedInnerColumns = [this.entitySchemaPersonReports.Columns[DisplayColumns.DISPLAY_PROPERTYNAME]];
+
+  //     this.dataModel = this.isAdmin ? await this.identitiesService.getDataModelAdmin() : await this.identitiesService.getDataModelReport();
+  //     this.filterOptions = this.dataModel.Filters;
+  //     this.groupingOptions = this.getGroupableProperties(this.dataModel.Properties);
+
+  //     if (!this.isAdmin) {
+  //       const indexActive = this.filterOptions.findIndex((elem) => elem.Name === 'isinactive');
+  //       if (indexActive > -1) {
+  //         this.filterOptions[indexActive].InitialValue = '0';
+  //       }
+  //       const reports = this.filterOptions.findIndex((elem) => elem.Name === 'reports');
+  //       if (reports > -1) {
+  //         this.filterOptions[reports].InitialValue = '0';
+  //       }
+  //     }
+
+  //     if (this.applyIssuesFilter) {
+  //       const indexWithManagerFilter = this.filterOptions.findIndex((elem) => elem.Name === 'withmanager');
+  //       if (indexWithManagerFilter > -1) {
+  //         this.filterOptions[indexWithManagerFilter].InitialValue = '0';
+  //       }
+  //     }
+  //     this.viewConfig = await this.viewConfigService.getInitialDSTExtension(this.dataModel, this.viewConfigPath);
+  //     await this.navigate();
+  //   } finally {
+  //     isBusy.endBusy();
+  //   }
+  // }
+
+
+  // init v2
   private async init(): Promise<void> {
     const isBusy = this.busyService.beginBusy();
 
@@ -369,15 +482,18 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
 
       this.displayedInnerColumns = [this.entitySchemaPersonReports.Columns[DisplayColumns.DISPLAY_PROPERTYNAME]];
 
-      this.dataModel = this.isAdmin ? await this.identitiesService.getDataModelAdmin() : await this.identitiesService.getDataModelReport();
+      this.dataModel = !this.isAdmin ? await this.identitiesService.getDataModelAdmin() : await this.identitiesService.getDataModelReport();
+      //this.dataModel = !this.isAdmin ? await this.identitiesService.getDataModelAdmin() : await this.identitiesService.getDataModelReport();
+
+      // tukaj probaj
       this.filterOptions = this.dataModel.Filters;
       this.groupingOptions = this.getGroupableProperties(this.dataModel.Properties);
 
       if (!this.isAdmin) {
-        const indexActive = this.filterOptions.findIndex((elem) => elem.Name === 'isinactive');
-        if (indexActive > -1) {
-          this.filterOptions[indexActive].InitialValue = '0';
-        }
+        // const indexActive = this.filterOptions.findIndex((elem) => elem.Name === 'isinactive');
+        // if (indexActive > -1) {
+        //   this.filterOptions[indexActive].InitialValue = '0';
+        // }
         const reports = this.filterOptions.findIndex((elem) => elem.Name === 'reports');
         if (reports > -1) {
           this.filterOptions[reports].InitialValue = '0';
@@ -397,6 +513,55 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
     }
   }
 
+  // private async navigate(): Promise<void> {
+  //   const isBusy = this.busyService.beginBusy();
+  //   try {
+  //     this.logger.debug(this, `Retrieving person list`);
+  //     this.logger.trace('Navigation settings', this.navigationState);
+  //     if (!this.groupingInfo && this.groupingOptions.length > 0) {
+  //       this.groupingInfo = {
+  //         groups: [
+  //           {
+  //             property: this.groupingOptions[0],
+  //             getData: async () => {
+  //               return this.identitiesService.getGroupedAllPerson('IdentityType', {
+  //                 PageSize: this.navigationState.PageSize,
+  //                 StartIndex: 0,
+  //                 withProperties: this.navigationState.withProperties,
+  //               });
+  //             },
+  //           },
+  //         ],
+  //       };
+  //     }
+
+  //     this.entitySchemaPersonReports = this.identitiesService.personReportsSchema;
+  //     const data = this.isAdmin
+  //       ? await this.identitiesService.getAllPersonAdmin(this.navigationState)
+  //       : await this.identitiesService.getReportsOfManager(this.navigationState);
+  //     const exportMethod: DataSourceToolbarExportMethod = this.isAdmin
+  //       ? this.identitiesService.exportAdminPerson(this.navigationState)
+  //       : this.identitiesService.exportPerson(this.navigationState);
+  //     exportMethod.initialColumns = this.displayedColumns.map((col) => col.ColumnName);
+
+  //     this.dstSettings = {
+  //       displayedColumns: this.displayedColumns,
+  //       dataSource: data,
+  //       entitySchema: this.entitySchemaPersonReports,
+  //       navigationState: this.navigationState,
+  //       filters: this.filterOptions,
+  //       groupData: this.groupingInfo,
+  //       dataModel: this.dataModel,
+  //       viewConfig: this.viewConfig,
+  //       exportMethod,
+  //     };
+  //     this.logger.debug(this, `Head at ${data.Data.length + this.navigationState.StartIndex} of ${data.totalCount} item(s)`);
+  //   } finally {
+  //     isBusy.endBusy();
+  //   }
+  // }
+
+  // v2
   private async navigate(): Promise<void> {
     const isBusy = this.busyService.beginBusy();
     try {
@@ -419,8 +584,9 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
         };
       }
 
+      // TUKAJ SPREMENIS POGLED DA SE VIDIJO VSI!!!!!!
       this.entitySchemaPersonReports = this.identitiesService.personReportsSchema;
-      const data = this.isAdmin
+      const data = !this.isAdmin
         ? await this.identitiesService.getAllPersonAdmin(this.navigationState)
         : await this.identitiesService.getReportsOfManager(this.navigationState);
       const exportMethod: DataSourceToolbarExportMethod = this.isAdmin
@@ -457,20 +623,21 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
     this.dstSettings.viewConfig = this.viewConfig;
   }
 
+  // tukaj spremenimo dovolenje da drug manager spremeni informacije drugih podrejeneih
   private async getPersonDetails(id: string): Promise<PortalAdminPerson | PortalPersonReports> {
     if (id == null || id.length <= 0) {
       return null;
     }
     this.logger.debug(this, `Retrieving details for admin person with id ${id}`);
 
-    return this.isAdmin ? this.identitiesService.getAdminPerson(id) : (await this.identitiesService.getPersonInteractive(id)).Data[0];
+    return !this.isAdmin ? this.identitiesService.getAdminPerson(id) : (await this.identitiesService.getPersonInteractive(id)).Data[0];
   }
 
-  // tukaj
+  //TULE POGLEDAMO NA ENDITITETO
   private async viewIdentity(identity: PortalAdminPerson | PortalPersonReports): Promise<void> {
     await this.sideSheet
-      .open(IdentitySidesheetComponent, {
-        title: await this.translate.get('#LDS#Heading Edit Identity').toPromise(),
+      .open(CustomRobotSidesheetComponent, {
+        title: await this.translate.get('#LDS# Edit Robot Identity').toPromise(),
         subTitle: identity.GetEntity().GetDisplay(),
         padding: '0px',
         disableClose: true,
@@ -480,12 +647,29 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
           isAdmin: this.isAdmin,
           projectConfig: this.projectConfig,
           selectedIdentity: identity,
-          canEdit: this.isPersonAdmin || this.isManagerForPersons,
+          canEdit: true,
         },
         testId: 'identities-view-identity-sidesheet',
       })
       .afterClosed()
       .toPromise();
+      // .open(IdentitySidesheetComponent, {
+      //   title: await this.translate.get('#LDS#Heading Edit Identity').toPromise(),
+      //   subTitle: identity.GetEntity().GetDisplay(),
+      //   padding: '0px',
+      //   disableClose: true,
+      //   width: 'max(768px, 70%)',
+      //   icon: 'contactinfo',
+      //   data: {
+      //     isAdmin: this.isAdmin,
+      //     projectConfig: this.projectConfig,
+      //     selectedIdentity: identity,
+      //     canEdit: this.isPersonAdmin || this.isManagerForPersons,
+      //   },
+      //   testId: 'identities-view-identity-sidesheet',
+      // })
+      // .afterClosed()
+      // .toPromise();
     return this.navigate();
   }
 
@@ -494,4 +678,5 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, SideN
     groupable = identityProperties.filter((item) => item.IsGroupable);
     return groupable;
   }
+
 }

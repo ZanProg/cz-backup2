@@ -50,13 +50,11 @@ export class BaseCdr implements ColumnDependentReference {
   }
 
   public isReadOnly(): boolean {
-    // if (this.isReadOnlyColumn !== undefined) {
-    //   return this.column == null || this.isReadOnlyColumn || !this.column.GetMetadata().CanEdit();
-    // } else {
-      // return this.column == null || 
-      // return !this.column.GetMetadata().CanEdit();
-      return false;
-    // }
+    if (this.isReadOnlyColumn !== undefined) {
+      return this.column == null || this.isReadOnlyColumn || !this.column.GetMetadata().CanEdit();
+    } else {
+      return this.column == null || !this.column.GetMetadata().CanEdit();
+    }
   }
 
   public updateMinLength(value: number): void {

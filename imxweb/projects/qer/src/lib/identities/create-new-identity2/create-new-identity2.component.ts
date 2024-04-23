@@ -203,12 +203,13 @@ export class CreateNewIdentity2Component implements OnDestroy {
       }
     }));
 
-    // Tega spremenis
+    // Tega spremenis.
     const customColumns = [
       'FirstName',
       'LastName',
       'Salutation',
       'Title',
+      'NameAddOn',
       'ContactEmail',
       'PhoneMobile',
       'UID_FirmPartner',
@@ -220,6 +221,7 @@ export class CreateNewIdentity2Component implements OnDestroy {
       'CCC_PhysicalAccess',
       'UID_ProfitCenter',
       'CCC_Capex',
+      'CCC_DomainAccount',
       'CCC_Jira',
       'EntryDate',
       'ExitDate',

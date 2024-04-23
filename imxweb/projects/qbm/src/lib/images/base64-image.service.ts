@@ -32,8 +32,8 @@ import { IWriteValue } from 'imx-qbm-dbts';
   providedIn: 'root'
 })
 export class Base64ImageService {
-  private readonly base64DataUrl = 'data:image/png;base64,';
-
+  // private readonly base64DataUrl = 'data:image/png;base64,';
+  private readonly base64DataUrl = 'data:image/jpeg;base64,';
   /**
    * Returns the image data without the base64-dataurl-prefix
    * @param url the corresponding url

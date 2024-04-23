@@ -76,6 +76,11 @@ import { ViewExternalComponent } from './view-external/view-external.component';
 import { Identities3Component } from './identities3/identities3.component';
 import { ViewInternalComponent } from './view-internal/view-internal.component';
 import { CreateNewIdentity3Component } from './create-new-identity3/create-new-identity3.component';
+import { EditRobotComponent } from './edit-robot/edit-robot.component';
+import { EditExternalComponent } from './edit-external/edit-external.component';
+import { CustomIdentitySidesheetComponent } from './custom-identity-sidesheet/custom-identity-sidesheet.component';
+import { CustomRobotSidesheetComponent } from './custom-robot-sidesheet/custom-robot-sidesheet.component';
+import { EditExternalIdentityFormDashboardComponent } from './edit-external-identity-form-dashboard/edit-external-identity-form-dashboard.component';
 
 const routes: Routes = [
   {
@@ -112,7 +117,12 @@ const routes: Routes = [
     ViewExternalComponent,
     Identities3Component,
     ViewInternalComponent,
-    CreateNewIdentity3Component
+    CreateNewIdentity3Component,
+    EditRobotComponent,
+    EditExternalComponent,
+    CustomIdentitySidesheetComponent,
+    CustomRobotSidesheetComponent,
+    EditExternalIdentityFormDashboardComponent
   ],
   imports: [
     CommonModule,
@@ -143,7 +153,7 @@ const routes: Routes = [
     HelpContextualModule
   ],
   providers: [IdentitiesService, IdentitiesReportsService],
-  exports: [DataExplorerIdentitiesComponent, CreateNewIdentity2Component, CreateExternalComponent, CreateRobotComponent, Identities2Component, ViewExternalComponent, Identities3Component, ViewInternalComponent, CreateNewIdentity3Component],
+  exports: [DataExplorerIdentitiesComponent, CreateNewIdentity2Component, CreateExternalComponent, CreateRobotComponent, Identities2Component, ViewExternalComponent, Identities3Component, ViewInternalComponent, CreateNewIdentity3Component, EditRobotComponent, EditExternalComponent, CustomIdentitySidesheetComponent, CustomRobotSidesheetComponent, EditExternalIdentityFormDashboardComponent],
   entryComponents: [CreateNewIdentityComponent, DuplicatesSidesheetComponent, CreateNewIdentity2Component],
 })
 export class IdentitiesModule {

@@ -62,6 +62,8 @@ import { CreateExternalComponent } from './identities/create-external/create-ext
 import { CreateRobotComponent } from './identities/create-robot/create-robot.component'
 import { ViewExternalComponent } from './identities/view-external/view-external.component';
 import { ViewInternalComponent } from '../public_api';
+import { EditRobotComponent } from './identities/edit-robot/edit-robot.component';
+import { EditExternalComponent } from './identities/edit-external/edit-external.component';
 
 export function initConfig(config: QerService): () => Promise<any> {
   return () =>
@@ -101,6 +103,18 @@ const routes: Routes = [
   { 
     path: 'view-internal',
     component: ViewInternalComponent,
+    canActivate: [RouteGuardService],
+    resolve: [RouteGuardService]
+  },
+  { 
+    path: 'edit-robot-view',
+    component: EditRobotComponent,
+    canActivate: [RouteGuardService],
+    resolve: [RouteGuardService]
+  },
+  { 
+    path: 'edit-external-view',
+    component: EditExternalComponent,
     canActivate: [RouteGuardService],
     resolve: [RouteGuardService]
   }

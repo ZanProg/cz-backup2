@@ -205,10 +205,13 @@ export class CreateNewIdentity3Component implements OnDestroy {
 
     // Tega spremenis - Identity data / Writable attributes    
     const customColumns = [
-      // 'PersonnelNumber',
+      'PersonnelNumber',
       'FirstName',
       'LastName',
       'DefaultEmailAddress',
+      'ContactEmail',
+      'CCC_UID_Profession',
+      'CCC_UID_JobPosition',
       'UID_Department',
       'UID_PersonHead',
       'EntryDate',

@@ -211,3 +211,8 @@ export { Identities2Component } from './lib/identities/identities2/identities2.c
 export { Identities3Component} from './lib/identities/identities3/identities3.component'
 export { ViewExternalComponent } from './lib/identities/view-external/view-external.component'
 export { ViewInternalComponent } from './lib/identities/view-internal/view-internal.component'
+export {EditRobotComponent} from './lib/identities/edit-robot/edit-robot.component'
+export {EditExternalComponent} from './lib/identities/edit-external/edit-external.component'
+export {CustomIdentitySidesheetComponent} from './lib/identities/custom-identity-sidesheet/custom-identity-sidesheet.component'
+export {CustomRobotSidesheetComponent} from './lib/identities/custom-robot-sidesheet/custom-robot-sidesheet.component'
+export {EditExternalIdentityFormDashboardComponent} from './lib/identities/edit-external-identity-form-dashboard/edit-external-identity-form-dashboard.component'

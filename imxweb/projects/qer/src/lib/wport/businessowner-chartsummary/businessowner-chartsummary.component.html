@@ -46,7 +46,7 @@
     <!-- <h2 id="align-left">{{'#LDS#Internal' | translate}}</h2> -->
     <ul class="imx-valuelist">
       <li *ngFor="let identity of reports">
-        <a (click)="openIdentitySidesheet(identity)" tabindex="0" *ngIf="!identity.IsExternal.value">{{identity.GetEntity().GetDisplay()}}</a>
+        <a (click)="openInternalEditIdentitySidesheet(identity)" tabindex="0" *ngIf="!identity.IsExternal.value">{{identity.GetEntity().GetDisplay()}}</a>
       </li>
     </ul>
     <!-- <h2 id="align-left">{{'#LDS#External' | translate}}</h2>
@@ -94,7 +94,7 @@
     <!-- <h2 id="align-left">{{'#LDS#External' | translate}}</h2> -->
     <ul class="imx-valuelist">
       <li *ngFor="let identity of reports">
-        <a (click)="openIdentitySidesheet(identity)" tabindex="0" *ngIf="identity.IsExternal.value">{{identity.GetEntity().GetDisplay()}}</a>
+        <a (click)="openExternalEditIdentitySidesheet(identity)" tabindex="0" *ngIf="identity.IsExternal.value">{{identity.GetEntity().GetDisplay()}}</a>
       </li>
     </ul>
   </div>

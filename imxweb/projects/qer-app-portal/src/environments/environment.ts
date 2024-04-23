@@ -30,9 +30,13 @@
 
 export const environment = {
   production: false,
-  // clientUrl: '',
+  clientUrl: '',
+  // clientUrl: 'https://idmweb1wt2.rb.cz/ApiServer/',
   // clientUrl: 'https://srv-im1/ApiServer',
-  clientUrl: 'http://localhost:8182',
+  // clientUrl: 'https://srv-im1/API2',
+  // clientUrl: 'http://localhost:8182',
+  // clientUrl: 'http://rfbapp.rfbidm.devel/ApiServer',
+  
   appName: 'qer-app-portal',
   appVersion: '1.0.0'
 };

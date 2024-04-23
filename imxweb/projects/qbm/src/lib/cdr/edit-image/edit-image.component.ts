@@ -46,8 +46,11 @@ import { FileSelectorService } from '../../file-selector/file-selector.service';
 export class EditImageComponent implements CdrEditor, OnDestroy {
   @ViewChild('file') public fileInput: ElementRef;
 
+  // public get fileFormatHint(): string {
+  //   return this.fileFormatError ? '#LDS#Please select an image in PNG format.' : undefined;
+  // }
   public get fileFormatHint(): string {
-    return this.fileFormatError ? '#LDS#Please select an image in PNG format.' : undefined;
+    return this.fileFormatError ? '#LDS#Please select an image in JPG format.' : undefined;
   }
 
   public readonly updateRequested = new Subject<void>();
@@ -135,8 +138,12 @@ export class EditImageComponent implements CdrEditor, OnDestroy {
   }
 
   // TODO: Check Upgrade
+  // public emitFiles(files: FileList): void {
+  //   this.fileSelector.emitFiles(files, 'image/png');
+  // }
+
   public emitFiles(files: FileList): void {
-    this.fileSelector.emitFiles(files, 'image/png');
+    this.fileSelector.emitFiles(files, 'image/jpeg');
   }
 
   /**
