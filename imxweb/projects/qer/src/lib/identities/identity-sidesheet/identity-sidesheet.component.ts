@@ -663,13 +663,52 @@ export class IdentitySidesheetComponent implements OnInit, OnDestroy {
     })
     );
 
+    // tole je personal columns katerega jaz kasneje overwritam!!!!!!!!!!!!
 this.personData= this.data.selectedIdentity.GetEntity();
-// this.personalColumns = this.data.projectConfig.OwnershipConfig.PrimaryFields["Person"];
-this.personalColumns = ['Gender', 'FirstName', 'MiddleName'];
+this.personalColumns = this.data.projectConfig.OwnershipConfig.PrimaryFields["Person"];
+// this.personalColumns = ['Gender', 'FirstName', 'MiddleName'];
+
+// this.personalColumns = [
+//   'FirstName',
+//   'LastName',
+//   'Salutation',
+//   'Title',
+//   'NameAddOn',
+//   'PhoneMobile',
+//   'ContactEmail',
+//   'CCC_UID_JobPosition',
+//   'UID_FirmPartner',
+//   'UID_Department',
+//   'UID_PersonHead',
+//   'CCC_ContractNumber',
+//   'CCC_365',
+//   'CCC_PhysicalAccess',
+//   'UID_ProfitCenter',
+//   'CCC_Capex',
+//   //'CCC_DomainAccount',
+//   'CCC_Jira',
+//   'ExitDate',
+//   'Remarks',
+//   'EmployeeType',
+//   'IsExternal',
+//   'JPegPhoto',
+// ];
+
+
 
 for (let i=0;i<this.personalColumns.length;i++){
+
 this.map.set(this.personalColumns[i],this.personData.GetColumn(this.personalColumns[i]).GetValue());
 }
+
+// for (let i = 0; i < this.personalColumns.length; i++) {
+//   const columnValue = this.personData.GetColumn(this.personalColumns[i])?.GetValue();
+//   console.log(columnValue);
+//   if (columnValue !== undefined || columnValue !== "") {
+//       this.map.set(this.personalColumns[i], columnValue);
+//   }
+// }
+
 
 this.subscriptions.push(authentication.onSessionResponse.subscribe((sessionState) => (this.currentUserUid = sessionState.UserUid)));
 
@@ -994,39 +1033,16 @@ const customPersonalColumns = [
         // 'IsPwdResetByHelpdeskAllowed'
       ];
   
-      const customColumns = [
-        'FirstName',
-        'LastName',
-        'Salutation',
-        'Title',
-        'NameAddOn',
-        'PhoneMobile',
-        'ContactEmail',
-        'CCC_UID_JobPosition',
-        'UID_FirmPartner',
-        'UID_Department',
-        'UID_PersonHead',
-        'CCC_ContractNumber',
-        'CCC_365',
-        'CCC_PhysicalAccess',
-        'UID_ProfitCenter',
-        'CCC_Capex',
-        //'CCC_DomainAccount',
-        'CCC_Jira',
-        'ExitDate',
-        'Remarks',
-        'EmployeeType',
-        'IsExternal',
-        'JPegPhoto',
-      ];
+      
   
       
      // const personalColumns = this.data.projectConfig.PersonConfig.VI_Employee_MasterData_Attributes;
       //const personalColumns = customPersonalColumns;
-      // this.cdrListPersonal = this.cdrFactoryService.buildCdrFromColumnList(this.data.selectedIdentity.GetEntity(), personalColumns, !this.data.canEdit);
+     //  this.cdrListPersonal = this.cdrFactoryService.buildCdrFromColumnList(this.data.selectedIdentity.GetEntity(), personalColumns, !this.data.canEdit);
   
-      const personalColumns = customColumns;
-      this.cdrListPersonal = this.cdrFactoryService.buildCdrFromColumnList2(this.data.selectedIdentity.GetEntity(), personalColumns);
+    // MORE BIT THIS.PERSONAL DA JE OD NANE
+    //   const personalColumns = customColumns;
+      this.cdrListPersonal = this.cdrFactoryService.buildCdrFromColumnList2(this.data.selectedIdentity.GetEntity(), this.personalColumns);
 
 
 
@@ -1034,6 +1050,35 @@ const customPersonalColumns = [
 // this.cdrListPersonal = this.cdrFactoryService.buildCdrFromColumnList(this.data.selectedIdentity.GetEntity(), personalColumns, !this.data.canEdit);
 
 const organizationalColumns = this.data.projectConfig.PersonConfig.VI_Employee_MasterData_OrganizationalAttributes;
+
+// tule daj preostale ko se morejo editirat na indentiteti
+
+const customColumns = [
+  'FirstName',
+  'LastName',
+  'Salutation',
+  'Title',
+  'NameAddOn',
+  'PhoneMobile',
+  'ContactEmail',
+  'CCC_UID_JobPosition',
+  'UID_FirmPartner',
+  'UID_Department',
+  'UID_PersonHead',
+  'CCC_ContractNumber',
+  'CCC_365',
+  'CCC_PhysicalAccess',
+  'UID_ProfitCenter',
+  'CCC_Capex',
+  //'CCC_DomainAccount',
+  'CCC_Jira',
+  'ExitDate',
+  'Remarks',
+  'EmployeeType',
+  'IsExternal',
+  'JPegPhoto',
+];
+
 this.cdrListOrganizational = this.cdrFactoryService.buildCdrFromColumnList(
 this.data.selectedIdentity.GetEntity(),
 organizationalColumns, !this.data.canEdit

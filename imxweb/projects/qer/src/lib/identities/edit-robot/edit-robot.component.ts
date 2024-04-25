@@ -17,6 +17,7 @@ import { IdentitiesReportsService } from '../identities-reports.service';
 import { IdentitiesService } from '../identities.service';
 import { CreateNewIdentity3Component } from '../create-new-identity3/create-new-identity3.component';
 import { CustomRobotSidesheetComponent } from '../custom-robot-sidesheet/custom-robot-sidesheet.component';
+import { IdentitySidesheetComponent } from '../identity-sidesheet/identity-sidesheet.component';
 
 @Component({
   selector: 'ccc-edit-robot',
@@ -653,6 +654,23 @@ export class EditRobotComponent implements OnInit, OnDestroy, SideNavigationComp
       })
       .afterClosed()
       .toPromise();
+      // .open(IdentitySidesheetComponent, {
+      //   title: await this.translate.get('#LDS#Heading Edit Identity').toPromise(),
+      //   subTitle: identity.GetEntity().GetDisplay(),
+      //   padding: '0px',
+      //   disableClose: true,
+      //   width: 'max(768px, 70%)',
+      //   icon: 'contactinfo',
+      //   data: {
+      //     isAdmin: this.isAdmin,
+      //     projectConfig: this.projectConfig,
+      //     selectedIdentity: identity,
+      //     canEdit: true,
+      //   },
+      //   testId: 'identities-view-identity-sidesheet',
+      // })
+      // .afterClosed()
+      // .toPromise();
       // .open(IdentitySidesheetComponent, {
       //   title: await this.translate.get('#LDS#Heading Edit Identity').toPromise(),
       //   subTitle: identity.GetEntity().GetDisplay(),
