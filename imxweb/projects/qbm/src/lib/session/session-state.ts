@@ -89,6 +89,8 @@ export class SessionState implements ISessionState {
     }
     this.culture = this.sessionResponse?.Status?.Culture;
     this.cultureFormat  = this.sessionResponse?.Status?.CultureFormat ;
+
+    
   }
 
   private GetCurrentAuthStep(): AuthStepLevels {

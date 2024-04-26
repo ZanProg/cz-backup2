@@ -802,6 +802,21 @@ this.busyService.hide(overlayRef);
 }
 }
 
+  // public async save2(): Promise<void> {
+  //   if (this.detailsFormGroup.valid) {
+  //     this.logger.debug(this, `Saving identity manager change`);
+  //     const overlayRef = this.busyService.show();
+  //     try {
+  //       await this.data.selectedIdentity.GetEntity().Commit(true);
+  //       this.detailsFormGroup.markAsPristine();
+  //       this.snackbar.open({ key: '#LDS#The changes have been successfully saved.' });
+  //       this.closeSidesheet();
+  //     } finally {
+  //       this.busyService.hide(overlayRef);
+  //     }
+  //   }
+  // }
+
 private getDirtyValues(form: any) {
 let dirtyValues = {};
 
@@ -816,7 +831,7 @@ else
 dirtyValues[key] = currentControl.value;
 }
 });
-
+console.log(dirtyValues)
 return dirtyValues;
 }
 

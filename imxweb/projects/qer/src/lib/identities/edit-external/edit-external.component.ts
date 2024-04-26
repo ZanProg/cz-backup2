@@ -100,7 +100,7 @@ export class EditExternalComponent implements OnInit, OnDestroy, SideNavigationC
     qerPermissionService: QerPermissionsService,
     private identityReports: IdentitiesReportsService,
     settingsService: SettingsService,
-    private extService: ExtService
+    private extService: ExtService,
   ) {
     // Tule spremenis filter
     this.navigationState = { PageSize: settingsService.DefaultPageSize, StartIndex: 0, filter: [{
@@ -117,7 +117,14 @@ export class EditExternalComponent implements OnInit, OnDestroy, SideNavigationC
         this.isPersonAdmin = await qerPermissionService.isPersonAdmin();
         this.isAuditor = await qerPermissionService.isAuditor();
       }
+      console.log(session)
+      console.log(session.isOAuth)
     });
+
+    
+    
+
+    
   }
 
   get isMobile(): boolean {

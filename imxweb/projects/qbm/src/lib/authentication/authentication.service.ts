@@ -140,6 +140,7 @@ export class AuthenticationService {
 
     this.onSessionResponse.next(sessionState);
 
+    console.log(sessionState);
     return sessionState;
   }
 

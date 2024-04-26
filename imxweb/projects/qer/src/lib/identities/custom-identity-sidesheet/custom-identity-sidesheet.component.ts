@@ -984,6 +984,9 @@ const organizationalColumns = this.data.projectConfig.PersonConfig.VI_Employee_M
       'Salutation',
       'Title',
       'NameAddOn',
+      'DefaultEmailAddress',
+      'EntryDate',
+      'CentralAccount',
       'PhoneMobile',
       'CCC_ContractNumber',
       'CCC_365',
@@ -1011,8 +1014,8 @@ const organizationalColumns = this.data.projectConfig.PersonConfig.VI_Employee_M
   //  preostali columns
   this.cdrListOrganizational = this.cdrFactoryService.buildCdrFromColumnList2(this.data.selectedIdentity.GetEntity(), customColumns, readOnlyColumns, defaultValues);
 
-// this.cdrListOrganizational = this.cdrFactoryService.buildCdrFromColumnList(
-// this.data.selectedIdentity.GetEntity(), organizationalColumns, !this.data.canEdit );
+this.cdrListOrganizational = this.cdrFactoryService.buildCdrFromColumnList(
+this.data.selectedIdentity.GetEntity(), organizationalColumns, !this.data.canEdit );
 
 // tole tudi zakomentiraj
 // const localityColumns = this.data.projectConfig.PersonConfig.VI_Employee_MasterData_LocalityAttributes;

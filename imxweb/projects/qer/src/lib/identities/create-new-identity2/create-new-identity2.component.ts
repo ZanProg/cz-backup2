@@ -234,6 +234,8 @@ export class CreateNewIdentity2Component implements OnDestroy {
     const insertedExitDate = new Date();
     insertedExitDate.setFullYear(insertedExitDate.getFullYear() + 1);
 
+ 
+
     const readOnlyColumns = ['EmployeeType'];
 
     const defaultValues = {

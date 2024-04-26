@@ -1,5 +1,5 @@
 <mat-tab-group #tabs>
-  <!-- <mat-tab>
+   <mat-tab>
     <ng-template mat-tab-label>
       <span translate>#LDS#Overview</span>
     </ng-template>
@@ -49,7 +49,7 @@
         </mat-card>
       </div>
     </ng-template>
-  </mat-tab> -->
+  </mat-tab> 
   <mat-tab [label]="'#LDS#Heading Main Data' | translate">
     <div eui-sidesheet-content class="governance-sidesheet__tab-content">
       <div class="governance-sidesheet__tab-content-body">
@@ -137,7 +137,7 @@
 
     </div>
   </mat-tab>
-  <!-- <mat-tab>
+   <mat-tab>
     <ng-template mat-tab-label>
       <span translate>#LDS#Heading Memberships</span>
     </ng-template>
@@ -146,8 +146,8 @@
         <imx-assignments [parameters]="parameters"></imx-assignments>
       </div>
     </ng-template>
-  </mat-tab> -->
-  <!-- <mat-tab *ngIf="!data.isAdmin">
+  </mat-tab> 
+   <mat-tab *ngIf="!data.isAdmin">
     <ng-template mat-tab-label>
       <span translate>#LDS#Requests</span>
     </ng-template>
@@ -160,8 +160,8 @@
         </div>
       </div>
     </ng-template>
-  </mat-tab> -->
-  <!-- <ng-container *ngFor="let tab of dynamicTabs">
+  </mat-tab> 
+   <ng-container *ngFor="let tab of dynamicTabs">
     <mat-tab [imxDataProvider]="parameters" [label]="tab.inputData.label | translate">
       <ng-template matTabContent>
         <div eui-sidesheet-content class="governance-sidesheet__tab-content">
@@ -171,7 +171,7 @@
         </div>
       </ng-template>
     </mat-tab>
-  </ng-container> -->
+  </ng-container> 
 </mat-tab-group>
 <div eui-sidesheet-actions>
   <button
