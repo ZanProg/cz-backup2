@@ -32,7 +32,6 @@ export const environment = {
   production: false,
   clientUrl: '',
   // clientUrl: 'http://localhost:8182',
-  // clientUrl: 'https://idmweb1wt2.rb.cz/ApiServer/',
   appName: 'qer-app-pwdportal',
   appVersion: '1.0.0'
 };

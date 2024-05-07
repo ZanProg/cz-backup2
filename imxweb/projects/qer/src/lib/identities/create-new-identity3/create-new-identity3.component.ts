@@ -202,8 +202,7 @@ export class CreateNewIdentity3Component implements OnDestroy {
         this.sidesheetRef.close(false);
       }
     }));
-
-    // Tega spremenis - Identity data / Writable attributes    
+  
     const customColumns = [
       'PersonnelNumber',
       'FirstName',
@@ -226,7 +225,7 @@ export class CreateNewIdentity3Component implements OnDestroy {
     const readOnlyColumns = ['EmployeeType'];
     
     const defaultValues = {
-      'EmployeeType': 'Other', // Set your default value here,
+      'EmployeeType': 'Other', 
       'ExitDate':  insertedExitDate
     };
 

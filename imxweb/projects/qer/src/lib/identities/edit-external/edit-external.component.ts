@@ -349,14 +349,15 @@ export class EditExternalComponent implements OnInit, OnDestroy, SideNavigationC
         );
       }
 
-      // TULE POVZROCA ERROR
+      
 
       // Ensure this column is always added last
       this.displayedColumns.push(this.entitySchemaPersonReports.Columns.XMarkedForDeletion);
 
       this.displayedInnerColumns = [this.entitySchemaPersonReports.Columns[DisplayColumns.DISPLAY_PROPERTYNAME]];
 
-      //TOLE JE ERROR, MORE BIT !this.admin ker oseba ko to more videt NI admin.
+      
+      // here we need !this.admin since the person viewing the data is not an admin in this case
       this.dataModel = !this.isAdmin ? await this.identitiesService.getDataModelAdmin() : await this.identitiesService.getDataModelReport();
       this.filterOptions = this.dataModel.Filters;
       this.groupingOptions = this.getGroupableProperties(this.dataModel.Properties);
@@ -364,7 +365,7 @@ export class EditExternalComponent implements OnInit, OnDestroy, SideNavigationC
       if (!this.isAdmin) {
         const indexActive = this.filterOptions.findIndex((elem) => elem.Name === 'isinactive');
         if (indexActive > -1) {
-          // tukaj ne sme bit cekirano da vidimo vse active in inactive
+          // comment out the filter option
           // this.filterOptions[indexActive].InitialValue = '0';
           // this.filterOptions[indexActive].InitialValue = '1';
         }
@@ -447,7 +448,7 @@ export class EditExternalComponent implements OnInit, OnDestroy, SideNavigationC
     this.dstSettings.viewConfig = this.viewConfig;
   }
 
-  // tukaj spremeniimo da lahko drugi manager spremenmi informacije o drugih podrejenih
+  
   private async getPersonDetails(id: string): Promise<PortalAdminPerson | PortalPersonReports> {
     if (id == null || id.length <= 0) {
       return null;
@@ -457,7 +458,6 @@ export class EditExternalComponent implements OnInit, OnDestroy, SideNavigationC
     return !this.isAdmin ? this.identitiesService.getAdminPerson(id) : (await this.identitiesService.getPersonInteractive(id)).Data[0];
   }
 
-  // tukaj
   private async viewIdentity(identity: PortalAdminPerson | PortalPersonReports): Promise<void> {
     await this.sideSheet
       .open(CustomIdentitySidesheetComponent, {
@@ -477,23 +477,7 @@ export class EditExternalComponent implements OnInit, OnDestroy, SideNavigationC
       })
       .afterClosed()
       .toPromise();
-      // .open(IdentitySidesheetComponent, {
-      //   title: await this.translate.get('#LDS#Heading Edit Identity').toPromise(),
-      //   subTitle: identity.GetEntity().GetDisplay(),
-      //   padding: '0px',
-      //   disableClose: true,
-      //   width: 'max(768px, 70%)',
-      //   icon: 'contactinfo',
-      //   data: {
-      //     isAdmin: this.isAdmin,
-      //     projectConfig: this.projectConfig,
-      //     selectedIdentity: identity,
-      //     canEdit: this.isPersonAdmin || this.isManagerForPersons,
-      //   },
-      //   testId: 'identities-view-identity-sidesheet',
-      // })
-      // .afterClosed()
-      // .toPromise();
+      
     return this.navigate();
   }
 

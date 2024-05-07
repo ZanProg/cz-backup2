@@ -402,60 +402,6 @@ export class EditRobotComponent implements OnInit, OnDestroy, SideNavigationComp
     return this.navigate();
   }
 
-  // private async init(): Promise<void> {
-  //   const isBusy = this.busyService.beginBusy();
-
-  //   this.entitySchemaPersonReports = this.identitiesService.personReportsSchema;
-  //   try {
-  //     this.projectConfig = await this.configService.getConfig();
-  //     this.displayedColumns = [
-  //       this.entitySchemaPersonReports.Columns[DisplayColumns.DISPLAY_PROPERTYNAME],
-  //       this.entitySchemaPersonReports.Columns.IsSecurityIncident,
-  //       this.entitySchemaPersonReports.Columns.UID_Department,
-  //     ];
-
-  //     if (!this.isAdmin) {
-  //       console.dir(this.entitySchemaPersonReports.Columns.IsExternal, { depth: null});
-  //       this.displayedColumns.push(
-  //         this.entitySchemaPersonReports.Columns.IdentityType,
-  //         this.entitySchemaPersonReports.Columns.EmployeeType,
-  //         this.entitySchemaPersonReports.Columns.IsExternal
-  //       );
-  //     }
-
-  //     // Ensure this column is always added last
-  //     this.displayedColumns.push(this.entitySchemaPersonReports.Columns.XMarkedForDeletion);
-
-  //     this.displayedInnerColumns = [this.entitySchemaPersonReports.Columns[DisplayColumns.DISPLAY_PROPERTYNAME]];
-
-  //     this.dataModel = this.isAdmin ? await this.identitiesService.getDataModelAdmin() : await this.identitiesService.getDataModelReport();
-  //     this.filterOptions = this.dataModel.Filters;
-  //     this.groupingOptions = this.getGroupableProperties(this.dataModel.Properties);
-
-  //     if (!this.isAdmin) {
-  //       const indexActive = this.filterOptions.findIndex((elem) => elem.Name === 'isinactive');
-  //       if (indexActive > -1) {
-  //         this.filterOptions[indexActive].InitialValue = '0';
-  //       }
-  //       const reports = this.filterOptions.findIndex((elem) => elem.Name === 'reports');
-  //       if (reports > -1) {
-  //         this.filterOptions[reports].InitialValue = '0';
-  //       }
-  //     }
-
-  //     if (this.applyIssuesFilter) {
-  //       const indexWithManagerFilter = this.filterOptions.findIndex((elem) => elem.Name === 'withmanager');
-  //       if (indexWithManagerFilter > -1) {
-  //         this.filterOptions[indexWithManagerFilter].InitialValue = '0';
-  //       }
-  //     }
-  //     this.viewConfig = await this.viewConfigService.getInitialDSTExtension(this.dataModel, this.viewConfigPath);
-  //     await this.navigate();
-  //   } finally {
-  //     isBusy.endBusy();
-  //   }
-  // }
-
 
   // init v2
   private async init(): Promise<void> {
@@ -486,7 +432,7 @@ export class EditRobotComponent implements OnInit, OnDestroy, SideNavigationComp
       this.dataModel = !this.isAdmin ? await this.identitiesService.getDataModelAdmin() : await this.identitiesService.getDataModelReport();
       //this.dataModel = !this.isAdmin ? await this.identitiesService.getDataModelAdmin() : await this.identitiesService.getDataModelReport();
 
-      // tukaj probaj
+    
       this.filterOptions = this.dataModel.Filters;
       this.groupingOptions = this.getGroupableProperties(this.dataModel.Properties);
 
@@ -514,55 +460,7 @@ export class EditRobotComponent implements OnInit, OnDestroy, SideNavigationComp
     }
   }
 
-  // private async navigate(): Promise<void> {
-  //   const isBusy = this.busyService.beginBusy();
-  //   try {
-  //     this.logger.debug(this, `Retrieving person list`);
-  //     this.logger.trace('Navigation settings', this.navigationState);
-  //     if (!this.groupingInfo && this.groupingOptions.length > 0) {
-  //       this.groupingInfo = {
-  //         groups: [
-  //           {
-  //             property: this.groupingOptions[0],
-  //             getData: async () => {
-  //               return this.identitiesService.getGroupedAllPerson('IdentityType', {
-  //                 PageSize: this.navigationState.PageSize,
-  //                 StartIndex: 0,
-  //                 withProperties: this.navigationState.withProperties,
-  //               });
-  //             },
-  //           },
-  //         ],
-  //       };
-  //     }
 
-  //     this.entitySchemaPersonReports = this.identitiesService.personReportsSchema;
-  //     const data = this.isAdmin
-  //       ? await this.identitiesService.getAllPersonAdmin(this.navigationState)
-  //       : await this.identitiesService.getReportsOfManager(this.navigationState);
-  //     const exportMethod: DataSourceToolbarExportMethod = this.isAdmin
-  //       ? this.identitiesService.exportAdminPerson(this.navigationState)
-  //       : this.identitiesService.exportPerson(this.navigationState);
-  //     exportMethod.initialColumns = this.displayedColumns.map((col) => col.ColumnName);
-
-  //     this.dstSettings = {
-  //       displayedColumns: this.displayedColumns,
-  //       dataSource: data,
-  //       entitySchema: this.entitySchemaPersonReports,
-  //       navigationState: this.navigationState,
-  //       filters: this.filterOptions,
-  //       groupData: this.groupingInfo,
-  //       dataModel: this.dataModel,
-  //       viewConfig: this.viewConfig,
-  //       exportMethod,
-  //     };
-  //     this.logger.debug(this, `Head at ${data.Data.length + this.navigationState.StartIndex} of ${data.totalCount} item(s)`);
-  //   } finally {
-  //     isBusy.endBusy();
-  //   }
-  // }
-
-  // v2
   private async navigate(): Promise<void> {
     const isBusy = this.busyService.beginBusy();
     try {
@@ -585,7 +483,7 @@ export class EditRobotComponent implements OnInit, OnDestroy, SideNavigationComp
         };
       }
 
-      // TUKAJ SPREMENIS POGLED DA SE VIDIJO VSI!!!!!!
+      // here we need !this.admin since the person viewing the data is not an admin in this case
       this.entitySchemaPersonReports = this.identitiesService.personReportsSchema;
       const data = !this.isAdmin
         ? await this.identitiesService.getAllPersonAdmin(this.navigationState)
@@ -654,40 +552,7 @@ export class EditRobotComponent implements OnInit, OnDestroy, SideNavigationComp
       })
       .afterClosed()
       .toPromise();
-      // .open(IdentitySidesheetComponent, {
-      //   title: await this.translate.get('#LDS#Heading Edit Identity').toPromise(),
-      //   subTitle: identity.GetEntity().GetDisplay(),
-      //   padding: '0px',
-      //   disableClose: true,
-      //   width: 'max(768px, 70%)',
-      //   icon: 'contactinfo',
-      //   data: {
-      //     isAdmin: this.isAdmin,
-      //     projectConfig: this.projectConfig,
-      //     selectedIdentity: identity,
-      //     canEdit: true,
-      //   },
-      //   testId: 'identities-view-identity-sidesheet',
-      // })
-      // .afterClosed()
-      // .toPromise();
-      // .open(IdentitySidesheetComponent, {
-      //   title: await this.translate.get('#LDS#Heading Edit Identity').toPromise(),
-      //   subTitle: identity.GetEntity().GetDisplay(),
-      //   padding: '0px',
-      //   disableClose: true,
-      //   width: 'max(768px, 70%)',
-      //   icon: 'contactinfo',
-      //   data: {
-      //     isAdmin: this.isAdmin,
-      //     projectConfig: this.projectConfig,
-      //     selectedIdentity: identity,
-      //     canEdit: this.isPersonAdmin || this.isManagerForPersons,
-      //   },
-      //   testId: 'identities-view-identity-sidesheet',
-      // })
-      // .afterClosed()
-      // .toPromise();
+      
     return this.navigate();
   }
 

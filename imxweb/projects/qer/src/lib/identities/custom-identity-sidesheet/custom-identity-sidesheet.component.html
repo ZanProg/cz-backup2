@@ -1,55 +1,5 @@
 <mat-tab-group #tabs>
-   <mat-tab>
-    <ng-template mat-tab-label>
-      <span translate>#LDS#Overview</span>
-    </ng-template>
-    <ng-template matTabContent>
-      <div eui-sidesheet-content class="imx-nested-group">
-        <mat-card>
-          <mat-tab-group>
-            <mat-tab label="{{ '#LDS#Heading Hyperview' | translate }}">
-              <ng-template matTabContent>
-                <div eui-sidesheet-content>
-                  <imx-object-hyperview
-                    [objectType]="data?.selectedIdentity?.GetEntity()?.TypeName"
-                    [objectUid]="data?.selectedIdentity?.GetEntity()?.GetKeys()[0]">
-                  </imx-object-hyperview>
-                </div>
-              </ng-template>
-            </mat-tab>
-            <mat-tab>
-              <ng-template mat-tab-label>
-                <span translate>#LDS#Heading Organizational Chart</span>
-              </ng-template>
-              <ng-template matTabContent>
-                <div eui-sidesheet-content class="governance-sidesheet__tab-content">
-                  <div class="governance-sidesheet__tab-content-body">
-                    <mat-card class="imx-tab-card">
-                      <imx-orgchart [uidPerson]="data.selectedIdentity.GetEntity().GetKeys()[0]"></imx-orgchart>
-                    </mat-card>
-                  </div>
-                </div>
-              </ng-template>
-            </mat-tab>
-            <mat-tab>
-              <ng-template mat-tab-label>
-                <span translate>#LDS#History</span>
-              </ng-template>
-              <ng-template matTabContent>
-                <div eui-sidesheet-content class="governance-sidesheet__tab-content">
-                  <div class="governance-sidesheet__tab-content-body">
-                    <mat-card>
-                      <imx-object-history objectType="Person" [showTitle]="false" [objectUid]="data.selectedIdentity.GetEntity().GetKeys()[0]"></imx-object-history>
-                    </mat-card>
-                  </div>
-                </div>
-              </ng-template>
-            </mat-tab>
-          </mat-tab-group>
-        </mat-card>
-      </div>
-    </ng-template>
-  </mat-tab> 
+  
   <mat-tab [label]="'#LDS#Heading Main Data' | translate">
     <div eui-sidesheet-content class="governance-sidesheet__tab-content">
       <div class="governance-sidesheet__tab-content-body">
@@ -137,41 +87,7 @@
 
     </div>
   </mat-tab>
-   <mat-tab>
-    <ng-template mat-tab-label>
-      <span translate>#LDS#Heading Memberships</span>
-    </ng-template>
-    <ng-template matTabContent>
-      <div eui-sidesheet-content class="governance-sidesheet__tab-content">
-        <imx-assignments [parameters]="parameters"></imx-assignments>
-      </div>
-    </ng-template>
-  </mat-tab> 
-   <mat-tab *ngIf="!data.isAdmin">
-    <ng-template mat-tab-label>
-      <span translate>#LDS#Requests</span>
-    </ng-template>
-    <ng-template matTabContent>
-      <div eui-sidesheet-content class="governance-sidesheet__tab-content">
-        <div class="governance-sidesheet__tab-content-body imx-requests">
-          <mat-card>
-            <imx-request-table [isReadOnly]="true" [uidRecipientRequester]="data.selectedIdentity.GetEntity().GetKeys()[0]"> </imx-request-table>
-          </mat-card>
-        </div>
-      </div>
-    </ng-template>
-  </mat-tab> 
-   <ng-container *ngFor="let tab of dynamicTabs">
-    <mat-tab [imxDataProvider]="parameters" [label]="tab.inputData.label | translate">
-      <ng-template matTabContent>
-        <div eui-sidesheet-content class="governance-sidesheet__tab-content">
-          <div class="governance-sidesheet__tab-content-body">
-            <ng-container *ngComponentOutlet="tab.instance"></ng-container>
-          </div>
-        </div>
-      </ng-template>
-    </mat-tab>
-  </ng-container> 
+ 
 </mat-tab-group>
 <div eui-sidesheet-actions>
   <button

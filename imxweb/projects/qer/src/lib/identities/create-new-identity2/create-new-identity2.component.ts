@@ -239,7 +239,7 @@ export class CreateNewIdentity2Component implements OnDestroy {
     const readOnlyColumns = ['EmployeeType'];
 
     const defaultValues = {
-      'EmployeeType': 'Consultant', // Set your default value here,
+      'EmployeeType': 'Consultant', 
       'IsExternal': true,
       'ExitDate':  insertedExitDate
     };
